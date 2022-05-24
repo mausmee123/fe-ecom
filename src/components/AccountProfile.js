@@ -88,11 +88,8 @@ const AccountProfile = (props) => {
                                 <Button variant="contained" color="primary" className="custom-btn">Save Changes</Button>
                             </Grid>
 
-
                             <Grid item xs={12} md={6} style={{ marginTop: 15 }}>
-                                <Typography variant="subtitle2" color="text.secondary" className="sub-title"style={{ marginBottom: '15px' }} component="div">
-                                   Change Password
-                                </Typography>
+
                                 <Grid item xs={12}>
                                     <RedditTextField
                                         label="Change Password"
@@ -103,7 +100,7 @@ const AccountProfile = (props) => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <RedditTextField
-                                        label="Confirm your new password"
+                                        label="Confirm new password"
                                         variant="outlined"
                                         style={{ marginTop: 11,display: "grid" }}
                                         type="password"

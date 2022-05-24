@@ -24,6 +24,7 @@ const PaymentSubscription = (props) => {
                                 <Typography variant="subtitle2" className="sub-title" color="text.secondary" component="div">
                                     Change Payment Method
                                 </Typography>
+                                
                                 <Button className="p-icon border-green"><PaymentOutlinedIcon/></Button>
                                 <Button className="p-icon border-green"><PaymentOutlinedIcon/></Button>
                                 <Button className="p-icon border-green"><PaymentOutlinedIcon/></Button>

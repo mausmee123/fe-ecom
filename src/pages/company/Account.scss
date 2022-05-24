@@ -1,0 +1,218 @@
+$color_red: #C32525;
+$color_green: #00D037;
+$color_yellow: #FCB900;
+$color_blue: #007FFF;
+
+.bg-red{
+  background-color: $color_red;
+}
+.bg-green{
+  background-color: $color_green;
+}
+.bg-yellow{
+  background-color: $color_yellow;
+}
+.bg-blue{
+  background-color: $color_blue;
+}
+.text-red{
+  color: $color_red;
+}
+.text-green{
+  color: $color_green;
+}
+.text-yellow{
+  color: $color_yellow;
+}
+.text-blue{
+  color: $color_blue;
+}
+.border-red{
+  border-color: $color_red;
+}
+.border-green{
+  border-color: $color_green;
+}
+.border-yellow{
+  border-color: $color_yellow;
+}
+.border-blue{
+  border-color: $color_blue;
+}
+
+
+.card-comp{
+  .card-wrap {
+    border-radius: 15px;
+    .card-content{
+      padding: 0;
+      .sub-title{
+        font-size: 16px;
+        color: #656565;
+      }
+    }
+  }
+  .heading-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    padding: 5px 15px;
+    text-align: center;
+    line-height: 31px;
+  }
+  .card-inner{
+    padding: 15px;
+    .card-toggle {
+      margin: 0;
+      @media only screen and (max-width: 479px) {
+        width: auto;
+      }
+    }
+    .us-btn{
+      margin-top: 30px;
+      @media only screen and (max-width: 479px) {
+        margin-top: 0;
+      }
+    }
+  }
+}
+.welcome-dash{
+  text-align: center;
+  margin: 0 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 815px;
+  @media only screen and (max-width: 1230px) {
+    margin: 0 20px;
+    height: 615px;
+  }
+  @media only screen and (max-width: 1024px) {
+    margin: 0 8px;
+  }
+  @media only screen and (max-width: 959px) {
+    height: auto;
+    margin: 15px 0;
+    .a-profile{
+      margin-bottom: 15px;
+    }
+  }
+}
+.welcome-d {
+  .user-btn {
+    text-transform: capitalize;
+    border-radius: 5px;
+    color: #fff;
+    margin: 5px;
+    font-size: 14px;
+    width: 30%;
+    padding: 10px;
+    @media only screen and (max-width: 1700px) {
+      width: 40%;
+    }
+    @media only screen and (max-width: 1023px) {
+      width: 43%;
+    }
+    @media only screen and (max-width: 959px) {
+      width: 31%;
+    }
+    @media only screen and (max-width: 599px) {
+      width: 30%;
+    }
+    @media only screen and (max-width: 479px) {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+
+  .custom-btn {
+    text-transform: capitalize;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 12px 10px;
+    @media only screen and (max-width: 1023px) {
+      font-size: 13px;
+      padding: 12px 7px;
+    }
+    @media only screen and (max-width: 959px) {
+      width: 31%;
+    }
+    @media only screen and (max-width: 479px) {
+      width: 100%;
+      margin-top: 8px !important;
+    }
+  }
+}
+
+
+.card-comp.gen-notification{
+  margin-bottom: 0;
+  position: relative;
+  .card-wrap {
+    box-shadow: none;
+    overflow: unset;
+  }
+}
+
+
+.notification{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  .toggle-wrap{
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 15px;
+    .toggle-text{
+      float: left;
+      font-size: 16px;
+      text-align: left;
+      width: 80%;
+      color: #656565;
+    }
+    .toggle-btn{
+      float: right;
+    }
+  }
+}
+
+.p-icon{
+  width: 40%;
+  margin: 12px;
+  border-width: 1px;
+  border-style: solid;
+  @media only screen and (max-width: 1230px) {
+    width: 36%;
+  }
+  @media only screen and (max-width: 479px) {
+    width: 46%;
+    margin: 5px;
+  }
+}
+
+.p-icon:active, .p-icon:focus{
+  border-width: 2px;
+}
+
+
+.subscription {
+  padding: 14px;
+  text-transform: capitalize;
+  font-size: 16px;
+  color: white;
+  background-color: $color_red;
+  &:hover{
+    background-color: #ba000d;
+  }
+  @media only screen and (max-width: 1700px) {
+    font-size: 15px;
+  }
+  @media only screen and (max-width: 1400px) {
+    padding: 8px;
+  }
+  @media only screen and (max-width: 1286px) {
+    font-size: 14px;
+  }
+  @media only screen and (max-width: 959px) {
+    width: 100%;
+  }
+}

@@ -13,8 +13,6 @@ const notificationLabel = [
     { label: "Enable notification when a user has upploaded new picture" },
     { label: "Enable notification for daily statatistics report"},
     { label: "Enable notification for daily statatistics report"},
-    { label: "Enable notification for daily statatistics report"},
-
 ];
 
 const Notifications = (props) => {
