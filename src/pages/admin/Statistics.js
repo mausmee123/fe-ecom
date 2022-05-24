@@ -1,5 +1,5 @@
 import React from 'react';
-import './statistics.scss'
+import './Statistics.scss'
 import {DataGrid} from '@mui/x-data-grid';
 import Grid from "@material-ui/core/Grid";
 import makeStyles from "@material-ui/core/styles/makeStyles";

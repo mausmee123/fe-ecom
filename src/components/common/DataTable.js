@@ -39,11 +39,11 @@ const StyledDataGrid = styled(DataGrid)(({borderColor}) => ({
     },
 }));
 
-export default function DataTable({rows, columns}) {
+export default function DataTable({rows, columns,borderColor}) {
     return (
         <div style={{width: "100%", height: rows.length > 0 ? "unset" : "450px"}}>
             <StyledDataGrid
-                borderColor={"#007FFF"}
+                borderColor={borderColor}
                 autoHeight={rows.length > 0}
                 rows={rows || []}
                 columns={columns}

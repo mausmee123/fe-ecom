@@ -1,5 +1,5 @@
 import React from 'react';
-import './account.scss'
+import './Account.scss'
 import Grid from "@material-ui/core/Grid";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import FilterType from "../../components/FilterType";
@@ -29,6 +29,7 @@ const Account = () => {
                     <Button variant="contained" color="primary" className="addUser btn">Refresh</Button>
                 </Grid>
             </Grid>
+
                 <AdminDashboard/>
             <AccountTable/>
             </div>

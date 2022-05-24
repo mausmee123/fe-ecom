@@ -1,5 +1,5 @@
 import React from 'react';
-import '../pages/admin/account.scss'
+import '../pages/admin/Account.scss'
 import Grid from "@material-ui/core/Grid";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
@@ -15,12 +15,12 @@ const useStyles = makeStyles({
         width: "80%",
         margin: "0 auto",
         borderRadius: "10px",
-        height: 400,
         overflow: 'auto',
         position: 'relative',
         border: "1px solid #e5e5e5",
         "@media only screen and (max-width: 1600px)": {
-            width: '90%'
+            width: '90%',
+            height: '400'
         },
         "@media only screen and (max-width: 1199px)": {
             width: '95%'
@@ -220,6 +220,7 @@ const Account = () => {
                                     <Button variant="contained" color="primary" className="btn">Export-exel</Button>
                                 </div>
                             </Typography>
+                            <div className="table-data">
                             <DataTable
                                 rows={rows}
                                 columns={columns}
@@ -227,6 +228,7 @@ const Account = () => {
                                 options={options}
                             >
                             </DataTable>
+                            </div>
                         </div>
                     </Grid>
                     <Grid item xs={12} md={6} className={classes.table2}>
@@ -237,12 +239,14 @@ const Account = () => {
                                     <Button variant="contained" color="primary" className="btn">Export-exel</Button>
                                 </div>
                             </Typography>
+                            <div className="table-data">
                             <DataTable
                                 rows={rows}
                                 columns={columns2}
                                 borderColor={"#00D037"}
                             >
                             </DataTable>
+                            </div>
                         </div>
                     </Grid>
                     <Grid item xs={12} md={6} className={classes.table2}>
@@ -253,12 +257,14 @@ const Account = () => {
                                     <Button variant="contained" color="primary" className="btn">Export-exel</Button>
                                 </div>
                             </Typography>
+                            <div className="table-data">
                             <DataTable
                                 rows={rows}
                                 columns={columns3}
                                 borderColor={"#C32525"}
                             >
                             </DataTable>
+                            </div>
                         </div>
                     </Grid>
                     <Grid item xs={12} md={6} className={classes.table2}>
