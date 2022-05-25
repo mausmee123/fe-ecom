@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Grid, makeStyles, TextField, ThemeProvider, Typography } from '@material-ui/core';
 import Radio from "@material-ui/core/Radio";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 const useStyle = makeStyles((theme) => ({
     wrapper: {
@@ -167,9 +164,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 
-const schema = yup.object().shape({
 
-});
 
 export default function LogoUpload() {
     const classes = useStyle();
@@ -188,12 +183,6 @@ export default function LogoUpload() {
         console.log('image1', image1);
         setLogoImage(URL.createObjectURL(img));
     };
-
-
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema),
-    });
-
     return (
         <Grid container className={classes.wrapper}>
             <Grid item xs={12}>

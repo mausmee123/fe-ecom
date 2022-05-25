@@ -10,9 +10,6 @@ import {
 } from '@material-ui/core';
 import Select, { components } from 'react-select';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 //custom theme for color
 
@@ -238,11 +235,6 @@ const DropdownIndicator = (props) => {
     );
 };
 
-
-const schema = yup.object().shape({
-    file: yup.string().required(),
-});
-
 export default function ImageUpload() {
     const classes = useStyle();
     const [image, setImage] = useState();
@@ -253,10 +245,6 @@ export default function ImageUpload() {
         setImage([...image, { img: URL.createObjectURL(file) }]);
         console.log('image', image);
     };
-
-    const { register, formState: { errors }} = useForm({
-        resolver: yupResolver(schema),
-    });
 
     return (
         <ThemeProvider theme={theme}>
@@ -283,9 +271,8 @@ export default function ImageUpload() {
                             accept="image/*"
                             style={{ display: 'none' }}
                             id="contained-button-file"
-                            {...register('file', {onChange: (e) => handleFileChange(e)})}
+                            onChange={(e) => handleFileChange(e)}
                         />
-                        <p>{errors.file?.message}</p>
                         <label htmlFor="contained-button-file">
                             <Button
                                 variant="contained"
