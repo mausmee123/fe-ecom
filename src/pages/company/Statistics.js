@@ -10,7 +10,8 @@ import "./Statistics.scss"
 
 
 const Statistics = () => {
-    return (<>
+    return (
+      <>
             <Box sx={{flexGrow: 1}}>
                 <div className="dashboard">
                     <Grid container spacing={1}>

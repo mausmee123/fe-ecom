@@ -137,13 +137,17 @@ $color_blue: #007FFF;
 }
 .heading-title {
   color: white;
-  padding: 10px 15px;
+  padding: 20px 15px;
   position: sticky;
   top: 0;
   z-index: 9;
   font-size: 14px;
   text-transform: capitalize;
   font-weight: bold;
+  .btn-group {
+    float: right;
+    margin-top: -9px;
+  }
 }
 .filterLabel{
   text-align: left;
@@ -183,7 +187,6 @@ $color_blue: #007FFF;
     }
     @media only screen and (max-width: 479px) {
       width: 100%;
-      margin: 5px 0;
     }
   }
 }
@@ -469,5 +472,25 @@ $color_blue: #007FFF;
     @media only screen and (max-width: 479px) {
       margin: 5px 0;
     }
+  }
+}
+
+.table{
+  width: 100%;
+  overflow: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F1F1F1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 }
