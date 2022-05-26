@@ -35,15 +35,22 @@ const useStyle = makeStyles((theme) => ({
         borderTopRightRadius: '15px',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+        height: '38px',
+        margin: '5px 0',
+        },
     },
     header: {
         fontSize: '22px',
         fontStyle: 'normal',
         color: '#fff',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: '16px'
-        }
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '12px'
+        },
     },
     inputFieldWrapper: {
         padding: '0 15px'
@@ -51,15 +58,9 @@ const useStyle = makeStyles((theme) => ({
     inputFieldTitle: {
         fontStyle: 'normal',
         fontSize: '14px',
-        margin: '10px',
+        margin: '10px 0',
         color: '#656565',
         textAlign: 'center',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '16px'
-        },
-        [theme.breakpoints.down('xs')]: {
-            fontSize: '10px'
-        }
     },
     input: {
         display:'grid',
@@ -68,7 +69,9 @@ const useStyle = makeStyles((theme) => ({
         width: '90%',
         height: '20px',
         [theme.breakpoints.down('sm')]: {
-            height: '0px'
+            height: '38px',
+            margin: '5px 0',
+            padding: '5px 14px',
         }
     },
     deleteCategoryButton: {
@@ -94,7 +97,7 @@ const useStyle = makeStyles((theme) => ({
         textTransform: 'capitalize',
         [theme.breakpoints.down('sm')]: {
             height: '38px',
-            fontSize: '10px'
+            margin: '5px 0',
         }
     },
     ring: {
@@ -124,46 +127,15 @@ const useStyle = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-
-        [theme.breakpoints.down('md')]: {
-            width: '320px',
-            height: '320px'
-        },
-        [theme.breakpoints.down('sm')]: {
-            width: '200px',
-            height: '200px'
-        },
-        [theme.breakpoints.down('xs')]: {
-            width: '125px',
-            height: '125px'
-        }
     },
     logoSvgIcon: {
         width: '50px',
         height: '50px',
-        [theme.breakpoints.down('sm')]: {
-            width: '30px',
-            height: '30px'
-        },
-        [theme.breakpoints.down('xs')]: {
-            width: '10px',
-            height: '10px'
-        }
     },
     uploadLogoButton: {
         fontSize: '12px',
         borderRadius: '20px',
         textTransform: 'capitalize',
-        [theme.breakpoints.down('sm')]: {
-            width: '100%',
-            height: '25px',
-            fontSize: '8px'
-        },
-        [theme.breakpoints.down('xs')]: {
-            width: '100%',
-            height: '20px',
-            fontSize: '5px'
-        }
     },
     dragLogoTitle: {
         fontSize: '12px',
@@ -173,12 +145,6 @@ const useStyle = makeStyles((theme) => ({
         textAlign: 'center',
         marginLeft: '12px',
         marginRight: '12px',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '17px'
-        },
-        [theme.breakpoints.down('xs')]: {
-            fontSize: '9px'
-        }
     },
     previewAndPublishButton: {
         marginTop: '20px',
@@ -191,14 +157,6 @@ const useStyle = makeStyles((theme) => ({
         paddingRight: '15px',
         textTransform: 'capitalize',
         [theme.breakpoints.down('md')]: {},
-        [theme.breakpoints.down('sm')]: {
-            marginTop: '40px',
-            marginBottom: '32px'
-        },
-        [theme.breakpoints.down('xs')]: {
-            marginTop: '10px',
-            marginBottom: '0px'
-        }
     },
     previewAndPublish: {
         color: '#fff',
@@ -207,12 +165,9 @@ const useStyle = makeStyles((theme) => ({
         margin: '15px 0',
         textTransform: 'capitalize',
         [theme.breakpoints.down('sm')]: {
-            height: '38px'
+            height: '38px',
+            margin: '5px 0',
         },
-        [theme.breakpoints.down('xs')]: {
-            // height: '20px'
-            fontSize: '10px'
-        }
     },
     keyword: {
         border: '1px solid rgba(0, 0, 0, 0.12)',
@@ -317,15 +272,15 @@ const ProductPreference = () => {
     const classes = useStyle();
     return (
         <ThemeProvider theme={theme}>
-            <Grid container style={{ width: '100%' }}>
-                <Grid container className={classes.productCategories} item xs={12}>
+            <Grid container style={{ width: '100%'}}>
+                <Grid container className={classes.productCategories} style={{ paddingBottom: "15px"}} item xs={12}>
                     <Grid className={classes.productCategoriesTitle} item xs={12}>
                         <Typography className={classes.header}>
                             Create/Delete Product Categories Preferences
                         </Typography>
                     </Grid>
 
-                    <Grid item xs={4} className={classes.inputFieldWrapper}>
+                    <Grid item lg={4} md={6} sm={6} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
                             Insert/edit Product Category
                         </Typography>
@@ -336,7 +291,7 @@ const ProductPreference = () => {
                         />
                     </Grid>
 
-                    <Grid item xs={4} className={classes.inputFieldWrapper}>
+                    <Grid item lg={4} md={6} sm={6} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
                             Insert/edit Product Category
                         </Typography>
@@ -347,7 +302,7 @@ const ProductPreference = () => {
                         />
                     </Grid>
 
-                    <Grid item xs={4} className={classes.inputFieldWrapper}>
+                    <Grid item lg={4} md={6} sm={6} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
                             Insert/edit Product Category
                         </Typography>
@@ -358,7 +313,7 @@ const ProductPreference = () => {
                         />
                     </Grid>
 
-                    <Grid item xs={4} className={classes.inputFieldWrapper}>
+                    <Grid item lg={4} md={6} sm={6} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
                             Insert/edit Product Category
                         </Typography>
@@ -369,7 +324,7 @@ const ProductPreference = () => {
                         />
                     </Grid>
 
-                    <Grid item xs={4} className={classes.inputFieldWrapper}>
+                    <Grid item lg={4} md={6} sm={12} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
                             Insert/edit Product Category
                         </Typography>
@@ -383,23 +338,33 @@ const ProductPreference = () => {
                         />
                     </Grid>
 
-                    <Grid item xs={4} className={classes.deleteCategoryButton}>
+                    <Grid container item lg={4} md={6} sm={12} xs={12} className={classes.previewAndPublishButton}>
                         <Button variant="contained" className={classes.deleteCategory}>
                             Delete Category
+                        </Button>
+
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.previewAndPublish}
+                        >
+                            Preview
+                        </Button>
+
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            className={classes.previewAndPublish}
+                        >
+                            Publish Category
                         </Button>
                     </Grid>
                     <Grid
                         item
-                        xs={4}
-                        style={{
-                            marginTop: '10px',
-                            paddingLeft: '5%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center'
-                        }}
+                        className="selectBtn"
+                        xs={12} md={6} sm={6} lg={4}
                     >
-                        <Typography className={classes.inputFieldTitle}>Pick ring color</Typography>
+                        <Typography className='inputFieldTitle'>Pick ring color</Typography>
                         <Grid container item xs={12} className={classes.name}>
                             <Grid item xs={0.5} className={classes.colorCode}>
                                 <Radio
@@ -446,13 +411,8 @@ const ProductPreference = () => {
 
                     <Grid
                         item
-                        xs={4}
-                        style={{
-                            marginTop: '10px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
+                        xs={4} md={6} sm={6} lg={4}
+                        className="uploadlIcon"
                     >
                         <div className={classes.uploadIcon}>
                             <svg
@@ -492,23 +452,7 @@ const ProductPreference = () => {
                             </Typography>
                         </div>
                     </Grid>
-                    <Grid container item xs={4} className={classes.previewAndPublishButton}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.previewAndPublish}
-                        >
-                            Preview
-                        </Button>
 
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            className={classes.previewAndPublish}
-                        >
-                            Publish Category
-                        </Button>
-                    </Grid>
                 </Grid>
 
                 <Grid container className={classes.keyword} item xs={12}>

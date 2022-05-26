@@ -2,11 +2,16 @@ import React from "react";
 import Autocomplete from "@mui/material/Autocomplete/Autocomplete";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
+import Button from "@material-ui/core/Button";
+import "../pages/admin/Publish.scss"
 
-const FilterByCompany = () => {
+const FilterByCompany = (props) => {
+    const { isAdmin } = props;
     return(
         <>
-            <InputLabel className="filterLabel" >Filter by Company</InputLabel>
+            <InputLabel className="filterLabel">Filter by Company</InputLabel>
+            {isAdmin && <InputLabel className="inputFieldTitle">Filter by Company</InputLabel> }
+
             <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -14,6 +19,8 @@ const FilterByCompany = () => {
                 renderInput={(params) => <TextField {...params}
                 />}
             />
+            {isAdmin && <Button variant="contained" color="primary" className="filter-btn edit">Edit</Button>}
+            {isAdmin && <Button variant="contained" color="primary" className="filter-btn delete">Delete</Button> }
         </>
     );
 };

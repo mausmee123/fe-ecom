@@ -1,0 +1,48 @@
+.BusinessPreference {
+  .filterLabel{
+  display: none;
+  }
+  .inputFieldTitle{
+    color: #656565;
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-style: normal;
+    text-align: center;
+  }
+}
+button.filter-btn{
+  margin:10px;
+  text-transform: capitalize;
+  @media only screen and (max-width: 1360px) {
+    margin: 5px;
+  }
+}
+button.filter-btn.delete{
+  background-color: #C32525;
+  float: right;
+  &:hover{
+    background-color: #ba000d;
+  }
+}
+.inputFieldTitle{
+  text-align: left;
+  color: #656565;
+  margin: 10px;
+  font-size: 14px;
+  font-style: normal;
+}
+.selectBtn{
+  margin-top: -200px;
+  @media only screen and (max-width: 959px) {
+    margin-top: 30px;
+  }
+}
+.uploadlIcon{
+  margin-top: -200px;
+  @media only screen and (max-width: 1349px) {
+    margin-top: -50px;
+  }
+  @media only screen and (max-width: 959px) {
+    margin-top: 30px;
+  }
+}

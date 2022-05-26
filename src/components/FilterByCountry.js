@@ -3,13 +3,16 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Box from "@material-ui/core/Box";
 import InputLabel from "@mui/material/InputLabel";
+import Button from "@material-ui/core/Button";
+import "../pages/admin/Publish.scss";
 
 
-
-const FilterByCountry = () => {
+const FilterByCountry = (props) => {
+    const { isAdmin } = props;
     return (
         <>
             <InputLabel className="filterLabel">Filter by Country</InputLabel>
+            {isAdmin && <InputLabel className="inputFieldTitle">Filter by Country</InputLabel> }
             <Autocomplete
                 id="country-select-demo"
                 options={countries}
@@ -37,6 +40,10 @@ const FilterByCountry = () => {
                     />
                 )}
             />
+
+            {isAdmin && <Button variant="contained" color="primary" className="filter-btn edit">Edit</Button>}
+            {isAdmin && <Button variant="contained" color="primary" className="filter-btn delete">Delete</Button> }
+
         </>
     );
 };
