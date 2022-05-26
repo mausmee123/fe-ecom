@@ -1,7 +1,6 @@
 import React from 'react';
 import {ThemeProvider} from "@material-ui/styles";
 import {createTheme, makeStyles} from "@material-ui/core";
-import LogoUpload from "../../components/LogoUpload";
 import ImageUpload from "../../components/ImageUpload";
 import Pictures from "../../components/Pictures";
 
@@ -54,9 +53,6 @@ const Publish = () => {
                 </div>
                 <div className={classes.upload}>
                     <ImageUpload />
-                </div>
-                <div className={classes.input}>
-                    <LogoUpload/>
                 </div>
             </ThemeProvider>
 

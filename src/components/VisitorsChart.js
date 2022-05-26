@@ -34,6 +34,7 @@ const VisitorsChart = () => {
                   <PersonAddIcon style={{fill: "#00D037"}}/>
                 </div>
                 <span>
+
                             <Typography variant="h4" className="font" style={{color: "#00D037"}}>12 586</Typography>
                             <Typography variant="h6" className="font" style={{color: "#00D037"}}>d-1: 12000</Typography>
                             <Typography variant="h6" className="font" style={{color: "#00D037"}}>(+586 +4,6%)</Typography>

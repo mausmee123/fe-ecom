@@ -10,6 +10,11 @@ import {
 } from '@material-ui/core';
 import Select, { components } from 'react-select';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import Radio from "@material-ui/core/Radio/Radio";
+
 
 //custom theme for color
 
@@ -166,12 +171,171 @@ const useStyle = makeStyles((them) => ({
         color: '#656565',
         padding: '0px'
     },
-    buttonTextColor: {
-        color: '#fff'
-    },
     placeholder: {
         color: '#a2a2a2'
+    },
+
+
+
+    wrapper: {
+        paddingLeft: '10px',
+        marginBottom:'40px',
+        width: '100%',
+        [theme.breakpoints.down('xs')]: {
+            paddingLeft: '0px'
+        }
+    },
+    uploadLogoTitle: {
+        color: '#656565',
+        fontStyle: 'normal',
+        fontSize:'20px',
+        marginBottom: '8px',
+        [theme.breakpoints.down('sm')]: {
+            marginBottom: '10px',
+            fontSize: '14px'
+        },
+        [theme.breakpoints.down('xs')]: {
+            marginBottom: '10px',
+            fontSize: '11px'
+        }
+    },
+    uploadLogoImage: {
+        border: '1px solid #656565',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: '10px'
+    },
+    logoSvgIcon: {
+        width: '55px',
+        height: '60px'
+    },
+    uploadLogoButton: {
+        width: '150px',
+        height: '32px',
+        fontSize: '15px',
+        borderRadius: '12px',
+        [theme.breakpoints.down('xs')]: {
+            width: '100%',
+            height: '25px',
+            fontSize: '8px'
+        }
+    },
+    dragLogoTitle: {
+        fontSize: '14px',
+        color: '#656565',
+        fontWeight: '500',
+        fontStyle: 'normal',
+        textAlign:'center',
+        margin:'4px 0',
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '10px'
+        }
+    },
+    UploadLogoSaveButton: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    savebutton: {
+        color: '#fff',
+        width: '80%',
+        height: '40px',
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '15px'
+        }
+    },
+    companyNameTitle: {
+        color: '#656565',
+        fontStyle: 'normal',
+        fontSize: '16px',
+        [theme.breakpoints.down('sm')]: {
+            margin: '10px 0',
+            fontSize: '14px'
+        },
+        [theme.breakpoints.down('xs')]: {
+            marginBottom: '10px',
+            fontSize: '11px'
+        }
+    },
+    name: {
+        display: 'flex',
+        alignItems: 'center'
+        // gap: '1em'
+    },
+    companyName: {
+        width: '95%'
+    },
+    companyNameLabel: {
+        height: '0px'
+    },
+    colorCode: {
+        paddingRight: '7px',
+        [theme.breakpoints.down('xs')]: {
+            paddingRight: '3px'
+        }
+    },
+    colorDotBlue: {
+        height: '4px',
+        width: '4px',
+        color:'#007fff',
+        backgroundColor: '#007fff',
+        '&.Mui-checked': {
+            color: '#007fff',
+            backgroundColor:'transparent',
+        },
+    },
+    colorDotGreen: {
+        height: '4px',
+        width: '4px',
+        color:'#00D037',
+        backgroundColor: '#00D037',
+        '&.Mui-checked': {
+            color: '#00D037',
+            backgroundColor:'transparent',
+        },
+    },
+    colorDotRed: {
+        height: '4px',
+        width: '4px',
+        color:'#C32525',
+        backgroundColor: '#C32525',
+        '&.Mui-checked': {
+            color: '#C32525',
+            backgroundColor:'transparent',
+        },
+    },
+    colorDotYellow: {
+        height: '4px',
+        width: '4px',
+        color:'#FCB900',
+        backgroundColor: '#FCB900',
+        '&.Mui-checked': {
+            color: '#FCB900',
+            backgroundColor:'transparent',
+        },
+    },
+    publish: {
+        width: '80%',
+        marginLeft: '10%',
+        marginRight: '10%',
+        marginTop: '50px',
+        fontSize:'20px',
+        textTransform:'capitalize',
+        fontWeight:'bold',
+        [theme.breakpoints.down('sm')]: {
+            margin: '30px 0px 0',
+            fontSize:'16px',
+            width: '100%',
+        }
+    },
+    buttonTextColor:{
+        color:'#fff'
     }
+
 }));
 
 const options = [
@@ -235,10 +399,21 @@ const DropdownIndicator = (props) => {
     );
 };
 
+
+const schema = yup.object().shape({
+    file: yup.string().required(),
+    destination: yup.string().required(),
+    keywords: yup.string().required(),
+    categories: yup.string().required(),
+    company: yup.string().required(),
+    color: yup.string().required(),
+});
+
+
 export default function ImageUpload() {
     const classes = useStyle();
     const [image, setImage] = useState();
-    const [logoImage, setLogoImage] = useState('');
+    const [uploadImage, setUploadImage] = useState('');
 
     const handleFileChange = (e) => {
         const [file] = e.target.files;
@@ -246,8 +421,38 @@ export default function ImageUpload() {
         console.log('image', image);
     };
 
+
+
+    const [logoImage, setLogoImage] = useState('');
+
+    const [selectedValue, setSelectedValue] = React.useState();
+
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
+    const logoUpload = (e) => {
+        console.log('logoImage1', logoImage);
+        const [img] = e.target.files;
+        const image1 = URL.createObjectURL(img);
+        console.log('image1', image1);
+        setLogoImage(URL.createObjectURL(img));
+    };
+
+
+    const onSubmitHandler = (data) => {
+        console.log({ data });
+        reset();
+    };
+
+
+    const { register, handleSubmit, formState: { errors } , reset} = useForm({
+        resolver: yupResolver(schema),
+    });
+
     return (
         <ThemeProvider theme={theme}>
+            <form onSubmit={handleSubmit(e => onSubmitHandler(e))}>
             <Grid container className={classes.main}>
                 <Grid container item xs={12} md={7} className={classes.firstGrid}>
                     <Grid item className={classes.uploadImage}>
@@ -271,24 +476,27 @@ export default function ImageUpload() {
                             accept="image/*"
                             style={{ display: 'none' }}
                             id="contained-button-file"
-                            onChange={(e) => handleFileChange(e)}
                         />
+
                         <label htmlFor="contained-button-file">
                             <Button
                                 variant="contained"
                                 classes={{ containedPrimary: classes.uploadButton }}
                                 color="primary"
                                 component="span"
+                                {...register('file', {onChange: (e) => handleFileChange(e)})}
                             >
                                 Upload Image
                             </Button>
                         </label>
+                        <br/>
+                        {errors.file?.message}
                         <Typography className={classes.dragTitle}>
                             or drag and drop image here
                         </Typography>
                     </Grid>
                     <Grid item className={classes.logoPlaceHolder}>
-                        <img className={classes.logoImage} src={logoImage} name="logo" />
+                        <img className={classes.logoImage} src={uploadImage} name="logo" />
                         <svg
                             className={classes.personIcon}
                             viewBox="0 0 55 50"
@@ -329,7 +537,11 @@ export default function ImageUpload() {
                         className={classes.urlTextfield}
                         variant="outlined"
                         placeholder="Place Url link here"
+                        {...register('destination')}
                     />
+                    {errors.destination?.message}
+                    <br/><br/>
+
                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
                         Choose one or more keywords for your picture
                     </Typography>
@@ -339,7 +551,10 @@ export default function ImageUpload() {
                         placeholder={<div className={classes.placeholder}>Select category</div>}
                         components={{ DropdownIndicator }}
                         options={options}
+                        {...register('keywords', {onChange: (e) => handleChange(e)})}
                     />
+                    {errors.keywords?.message}
+                    <br/><br/>
 
                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
                         Choose 1-5 business categories for your picture
@@ -349,9 +564,150 @@ export default function ImageUpload() {
                         styles={customStyles}
                         components={{ DropdownIndicator }}
                         options={options}
+                        {...register('categories', {onChange: (e) => handleChange(e)})}
                     />
+                    {errors.categories?.message}
+                    <br/><br/>
+
                 </Grid>
             </Grid>
+
+
+
+            <Grid container className={classes.wrapper}>
+                <Grid item xs={12}>
+                    <Typography className={classes.uploadLogoTitle}>
+                        Upload your company logo to the picture card
+                    </Typography>
+                </Grid>
+
+                <Grid container item xs={12}>
+                    <Grid item md={2} sm={7} xs={7} className={classes.uploadLogoImage}>
+                        <svg
+                          className={classes.logoSvgIcon}
+                          viewBox="0 0 118 97"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                              d="M81.0902 59.5723L58.8565 34.957L36.625 59.5723L41.1368 64.5701L55.6642 48.4829V96.4246H62.049V48.485L76.5745 64.5659L81.0902 59.5723Z"
+                              fill="#656565"
+                            />
+                            <path
+                              d="M92.9325 24.0291C91.8754 24.0291 90.8086 24.1055 89.7458 24.2581C84.3453 15.5051 74.5117 10.7959 64.9058 12.7529C60.3824 4.96036 52.5673 0.1875 44.143 0.1875C31.4061 0.1875 20.9309 10.7915 19.5923 24.6588C8.24 27.3539 0.171875 38.3078 0.171875 51.38C0.171875 66.4623 11.2542 78.7306 24.8738 78.7306H49.5433V71.7206H24.8738C14.7433 71.7206 6.50085 62.5946 6.50085 51.3776C6.50085 40.9307 13.5694 32.2348 22.9396 31.1515L25.7719 30.4412V27.5342C25.7719 16.3174 34.0122 7.19353 44.1428 7.19353C51.0847 7.19353 57.3565 11.4661 60.5144 18.3446L61.6999 20.9314L64.2162 20.1236C72.5372 17.454 81.3406 21.6778 85.4062 29.8073L86.5514 32.0932L88.8591 31.5313C90.2092 31.2005 91.5745 31.033 92.9247 31.033C103.013 31.033 111.217 40.159 111.217 51.3737C111.217 62.5905 102.975 71.7167 92.8441 71.7167H68.0062V78.7267H92.8462C106.466 78.7267 117.548 66.4582 117.548 51.3761C117.548 36.2997 106.506 24.0291 92.9325 24.0291Z"
+                              fill="#656565"
+                            />
+                        </svg>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          id="logo-upload-file"
+                          onChange={(e) => logoUpload(e)}
+                        />
+                        <label htmlFor="logo-upload-file">
+                            <Button
+                              variant="contained"
+                              classes={{ containedPrimary: classes.uploadLogoButton }}
+                              color="primary"
+                              component="span"
+                              {...register('file', {onChange: (e) => handleFileChange(e)})}
+                            >
+                                Upload Logo
+                            </Button>
+                        </label>
+
+                        {errors.file?.message}
+                        <Typography className={classes.dragLogoTitle}>
+                            or drag and drop image here
+                        </Typography>
+                    </Grid>
+
+                    <Grid item md={1} sm={3} xs={5} className={classes.UploadLogoSaveButton}>
+                        <Button
+                          variant="contained"
+                          className={classes.savebutton}
+                          color="secondary"
+                          component="span"
+                        >
+                            Save
+                        </Button>
+                    </Grid>
+
+                    <Grid container item md={4} sm={12}>
+                        <Grid item xs={12}>
+                            <Typography className={classes.companyNameTitle}>
+                                Option to write company name with color instead of Uploading logo
+                            </Typography>
+                        </Grid>
+                        <Grid container item xs={12} className={classes.name}>
+                            <Grid item xs={7}>
+                                <TextField
+                                  className={classes.companyName}
+                                  InputProps={{ classes: { input: classes.companyNameLabel } }}
+                                  variant="outlined"
+                                  {...register('company')}
+                                />
+                                {errors.company?.message}
+                            </Grid>
+                            <Grid item xs={0.5} className={classes.colorCode}>
+                                <Radio
+                                  checked={selectedValue === 'a'}
+                                  value="a"
+                                  name="radio-button-demo"
+                                  inputProps={{ 'aria-label': 'A' }}
+                                  className={classes.colorDotBlue}
+                                  {...register('color', {onChange: (e) => handleChange(e)})}
+                                />
+                            </Grid>
+                            <Grid item xs={0.5} className={classes.colorCode}>
+                                <Radio
+                                  checked={selectedValue === 'b'}
+                                  value="b"
+                                  name="radio-button-demo"
+                                  inputProps={{ 'aria-label': 'B' }}
+                                  className={classes.colorDotGreen}
+                                  {...register('color', {onChange: (e) => handleChange(e)})}
+                                />
+                            </Grid>
+                            <Grid item xs={0.5} className={classes.colorCode}>
+                                <Radio
+                                  checked={selectedValue === 'c'}
+                                  value="c"
+                                  name="radio-button-demo"
+                                  inputProps={{ 'aria-label': 'C' }}
+                                  className={classes.colorDotRed}
+                                  {...register('color', {onChange: (e) => handleChange(e)})}
+                                />
+                            </Grid>
+                            <Grid item xs={0.5} className={classes.colorCode}>
+                                <Radio
+                                  checked={selectedValue === 'd'}
+                                  value="d"
+                                  name="radio-button-demo"
+                                  inputProps={{ 'aria-label': 'D' }}
+                                  className={classes.colorDotYellow}
+                                  {...register('color', {onChange: (e) => handleChange(e)})}
+                                />
+                            </Grid>
+                            <p>{errors.color && 'At least one color must be selected'}</p>
+
+                        </Grid>
+                    </Grid>
+                    <Grid item md={5} sm={12} xs={12}>
+                        <Button
+                          className={classes.publish}
+                          variant="contained"
+                          color="secondary"
+                          type="submit"
+                          classes={{ label: classes.buttonTextColor }}
+                        >
+                            Publish
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Grid>
+            </form>
         </ThemeProvider>
     );
 }
