@@ -2,6 +2,7 @@ import React, {Suspense, lazy} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import Header from './components/common/Header';
 import LogIn from './pages/LogIn';
+import SignUp from "./pages/SignUp";
 import Pictures from './pages/company_deshboard/publish/Pictures';
 import ImageUpload from './pages/company_deshboard/publish/ImageUpload';
 
@@ -30,6 +31,8 @@ function App() {
             <Suspense fallback={<Loader/>}>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
+                    <Route path="/login" element={<LogIn/>}/>
+                    <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/admin" element={<AdminHeader/>}>
                         <Route index={true} element={<Publish/>}/>
                         <Route path="statistics" element={<Statistics/>}/>
@@ -40,6 +43,7 @@ function App() {
                         <Route path="statistics" element={<Company_Statistics/>}/>
                         <Route path="account" element={<Company_Account/>}/>
                     </Route>
+
                     <Route path="*" element={<NoMatch/>}/>
                 </Routes>
             </Suspense>

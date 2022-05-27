@@ -216,3 +216,10 @@ $color_blue: #007FFF;
     width: 100%;
   }
 }
+
+
+.invalid-feedback{
+  color: $color_red;
+  text-align: left;
+  padding-top: 4px;
+}

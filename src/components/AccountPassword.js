@@ -8,8 +8,12 @@ import Button from "@material-ui/core/Button";
 
 
 const schema = yup.object().shape({
-  password: yup.string().min(8).max(32).required(),
-  confirm_password: yup.string().min(8).max(32).required(),
+  password: yup.string()
+    .required('Password is required')
+    .min(8, 'Password length should be at least 4 characters'),
+  confirm_password: yup.string()
+    .required('Confirm Password is required')
+    .oneOf([yup.ref('password')], 'Passwords must and should match'),
 });
 
 const AccountPassword = () => {
@@ -36,7 +40,8 @@ const AccountPassword = () => {
               type="password"
               {...register("password")}
             />
-            {errors.password?.message}
+            <div className="invalid-feedback">{errors.password?.message}</div>
+
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -46,7 +51,8 @@ const AccountPassword = () => {
               type="password"
               {...register("confirm_password")}
             />
-            {errors.confirm_password && 'confirm password is required'}
+            <div className="invalid-feedback">{errors.confirm_password?.message}</div>
+
           </Grid>
         </Grid>
         <Grid item xs={12} md={6} style={{ marginTop: 15 }}>

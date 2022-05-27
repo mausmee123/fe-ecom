@@ -1,7 +1,6 @@
 import React from "react";
 import MultipleSelect from "./MultiSelect";
 import Button from "@material-ui/core/Button";
-import {alpha,styled} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -14,12 +13,10 @@ import AccountPassword from "./AccountPassword";
 
 
 const schema = yup.object().shape({
-    name: yup.string().required(),
-    email: yup.string().email().required(),
+    Name: yup.string().required(),
+    Email: yup.string().email().required(),
     user_email: yup.string().email().required(),
     multi_email: yup.string().email().required(),
-    password: yup.string().min(8).max(32).required(),
-    confirm_password: yup.string().min(8).max(32).required(),
 });
 
 
@@ -50,34 +47,38 @@ const AccountProfile = (props) => {
                                     label="Account Email"
                                     variant="outlined"
                                     type="email"
-                                    style={{ display: "grid" , marginBottom:"10px" }}
+                                    style={{ display: "grid" }}
                                     {...register('email', {onChange: (e) => setValue('select', e.target.value, { shouldValidate: true })})}
                                 />
-                                {errors.email?.message}
+                              <div className="invalid-feedback">{errors.Email?.message}</div>
+
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     label="Full Name of Owner"
                                     variant="outlined"
                                     type="text"
-                                    style={{ display: "grid" , marginBottom:"10px" }}
-                                    {...register('name')}
+                                    style={{ display: "grid"}}
+                                    {...register('Name')}
                                 />
-                                {errors.name?.message}
+                              <div className="invalid-feedback">{errors.Name?.message}</div>
+
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     label="Add more users"
                                     variant="outlined"
                                     type="email"
-                                    style={{ display: "grid" }}
+                                    style={{ display: "grid" , marginTop:"10px"}}
                                     {...register('user_email')}
                                 />
-                                {errors.user_email && 'Users email is required'}
+                              <div className="invalid-feedback">{errors.user_email && 'Users email is required'}</div>
+
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <MultipleSelect style={{ marginTop: 11, marginBottom: 0 }} {...register('multi_email')}/>
-                                {errors.multi_email && 'At least one email must be selected'}
+                                <MultipleSelect style={{ marginTop: 21, marginBottom: 0 }} {...register('multi_email')}/>
+                              <div className="invalid-feedback">{errors.multi_email && 'At least one email must be selected'}</div>
+
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Typography variant="subtitle2" color="text.secondary" className="sub-title" style={{ marginBottom: '15px' }} component="div">

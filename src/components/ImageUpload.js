@@ -334,6 +334,11 @@ const useStyle = makeStyles((them) => ({
     },
     buttonTextColor:{
         color:'#fff'
+    },
+
+    invalidFeedback:{
+        color:'#C32525',
+        textAlign:'left'
     }
 
 }));
@@ -343,6 +348,7 @@ const options = [
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' }
 ];
+
 
 // customStyle for select input field
 
@@ -401,12 +407,49 @@ const DropdownIndicator = (props) => {
 
 
 const schema = yup.object().shape({
-    file: yup.string().required(),
-    destination: yup.string().required(),
-    keywords: yup.string().required(),
-    categories: yup.string().required(),
-    company: yup.string().required(),
+    Destination: yup.string().required(),
+    Keywords: yup.string().required(),
+    Categories: yup.string().required(),
+    Company: yup.string().required(),
     color: yup.string().required(),
+    file: yup.mixed()
+      .test('required', "You need to provide a file", (value) =>{
+          return value && value.length
+      } )
+      .test("fileSize", "The file is too large", (value, context) => {
+          return value && value[0] && value[0].size <= 200000;
+      })
+      .test("type", "We only support jpeg", function (value) {
+          return value && value[0] && value[0].type === "image/jpeg";
+      }),
+    picture: yup.mixed()
+      .test('required', "You need to provide a file", (value) =>{
+          return value && value.length
+      } )
+      .test("fileSize", "The file is too large", (value, context) => {
+          return value && value[0] && value[0].size <= 200000;
+      })
+      .test("type", "We only support jpeg", function (value) {
+          return value && value[0] && value[0].type === "image/jpeg";
+      }),
+    // option: yup.array()
+    //   .min(3, 'Pick at least 3 tags')
+    //   .of(
+    //     yup.object().shape({
+    //         label: yup.string().required(),
+    //         value: yup.string().required(),
+    //     })
+    //   ),
+    selAutoV: yup.array().required("Multi Select Validation Field required"),
+    multipleSelect: yup.array()
+      .min(3, 'Pick at least 3 tags')
+      .of(
+        yup.object().shape({
+            label: yup.string().required(),
+            value: yup.string().required(),
+        })
+      ),
+
 });
 
 
@@ -420,7 +463,6 @@ export default function ImageUpload() {
         setImage([...image, { img: URL.createObjectURL(file) }]);
         console.log('image', image);
     };
-
 
 
     const [logoImage, setLogoImage] = useState('');
@@ -448,6 +490,9 @@ export default function ImageUpload() {
 
     const { register, handleSubmit, formState: { errors } , reset} = useForm({
         resolver: yupResolver(schema),
+        defaultValues: {
+            multipleSelect: []
+        }
     });
 
     return (
@@ -476,6 +521,7 @@ export default function ImageUpload() {
                             accept="image/*"
                             style={{ display: 'none' }}
                             id="contained-button-file"
+                            {...register("file")}
                         />
 
                         <label htmlFor="contained-button-file">
@@ -484,13 +530,13 @@ export default function ImageUpload() {
                                 classes={{ containedPrimary: classes.uploadButton }}
                                 color="primary"
                                 component="span"
-                                {...register('file', {onChange: (e) => handleFileChange(e)})}
                             >
                                 Upload Image
                             </Button>
                         </label>
+                        <div className={classes.invalidFeedback}>{errors.file?.message}</div>
                         <br/>
-                        {errors.file?.message}
+
                         <Typography className={classes.dragTitle}>
                             or drag and drop image here
                         </Typography>
@@ -537,9 +583,10 @@ export default function ImageUpload() {
                         className={classes.urlTextfield}
                         variant="outlined"
                         placeholder="Place Url link here"
-                        {...register('destination')}
+                        {...register('Destination')}
                     />
-                    {errors.destination?.message}
+                    <div className={classes.invalidFeedback}>{errors.Destination?.message}</div>
+
                     <br/><br/>
 
                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
@@ -551,9 +598,9 @@ export default function ImageUpload() {
                         placeholder={<div className={classes.placeholder}>Select category</div>}
                         components={{ DropdownIndicator }}
                         options={options}
-                        {...register('keywords', {onChange: (e) => handleChange(e)})}
+                        {...register('Keywords', {onChange: (e) => handleChange(e)})}
                     />
-                    {errors.keywords?.message}
+                    <div className={classes.invalidFeedback}>{errors.Keywords?.message}</div>
                     <br/><br/>
 
                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
@@ -564,9 +611,11 @@ export default function ImageUpload() {
                         styles={customStyles}
                         components={{ DropdownIndicator }}
                         options={options}
-                        {...register('categories', {onChange: (e) => handleChange(e)})}
+                        {...register('multipleSelect')}
+                        required={true}
+                        name="multipleSelect"
                     />
-                    {errors.categories?.message}
+                    <div className={classes.invalidFeedback}>{errors.multipleSelect?.message}</div>
                     <br/><br/>
 
                 </Grid>
@@ -603,7 +652,7 @@ export default function ImageUpload() {
                           accept="image/*"
                           style={{ display: 'none' }}
                           id="logo-upload-file"
-                          onChange={(e) => logoUpload(e)}
+                          {...register('picture')}
                         />
                         <label htmlFor="logo-upload-file">
                             <Button
@@ -611,13 +660,12 @@ export default function ImageUpload() {
                               classes={{ containedPrimary: classes.uploadLogoButton }}
                               color="primary"
                               component="span"
-                              {...register('file', {onChange: (e) => handleFileChange(e)})}
                             >
                                 Upload Logo
                             </Button>
                         </label>
+                        <div className={classes.invalidFeedback}>{errors.picture?.message}</div>
 
-                        {errors.file?.message}
                         <Typography className={classes.dragLogoTitle}>
                             or drag and drop image here
                         </Typography>
@@ -646,10 +694,11 @@ export default function ImageUpload() {
                                   className={classes.companyName}
                                   InputProps={{ classes: { input: classes.companyNameLabel } }}
                                   variant="outlined"
-                                  {...register('company')}
+                                  {...register('Company')}
                                 />
-                                {errors.company?.message}
+                                <div className={classes.invalidFeedback}>{errors.Company?.message}</div>
                             </Grid>
+                            <Grid container xs={5}>
                             <Grid item xs={0.5} className={classes.colorCode}>
                                 <Radio
                                   checked={selectedValue === 'a'}
@@ -690,8 +739,8 @@ export default function ImageUpload() {
                                   {...register('color', {onChange: (e) => handleChange(e)})}
                                 />
                             </Grid>
-                            <p>{errors.color && 'At least one color must be selected'}</p>
-
+                            <div className={classes.invalidFeedback}>{errors.color && 'At least one color must be selected'}</div>
+                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid item md={5} sm={12} xs={12}>

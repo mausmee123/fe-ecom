@@ -33,7 +33,7 @@ const customStyles = {
         ...provider,
         width: '100%',
         // marginLeft: '10%',
-        marginBottom: '20px',
+        marginTop: '10px',
         textAlign:'left',
 
 
