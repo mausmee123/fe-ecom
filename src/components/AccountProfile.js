@@ -48,7 +48,7 @@ const AccountProfile = (props) => {
                                     variant="outlined"
                                     type="email"
                                     style={{ display: "grid" }}
-                                    {...register('email', {onChange: (e) => setValue('select', e.target.value, { shouldValidate: true })})}
+                                    {...register('Email', {onChange: (e) => setValue('select', e.target.value, { shouldValidate: true })})}
                                 />
                               <div className="invalid-feedback">{errors.Email?.message}</div>
 

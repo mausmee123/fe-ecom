@@ -408,7 +408,14 @@ const DropdownIndicator = (props) => {
 
 const schema = yup.object().shape({
     Destination: yup.string().required(),
-    Keywords: yup.string().required(),
+    Keywords: yup.array()
+      .min(3, 'Pick at least 3 tags')
+      .of(
+        yup.object().shape({
+            label: yup.string().required(),
+            value: yup.string().required(),
+        })
+      ),
     Categories: yup.string().required(),
     Company: yup.string().required(),
     color: yup.string().required(),
@@ -441,14 +448,7 @@ const schema = yup.object().shape({
     //     })
     //   ),
     selAutoV: yup.array().required("Multi Select Validation Field required"),
-    multipleSelect: yup.array()
-      .min(3, 'Pick at least 3 tags')
-      .of(
-        yup.object().shape({
-            label: yup.string().required(),
-            value: yup.string().required(),
-        })
-      ),
+    multipleSelect: yup.array().min(1),
 
 });
 
@@ -464,13 +464,16 @@ export default function ImageUpload() {
         console.log('image', image);
     };
 
+    const [selectedOption, setSelectedOption] = useState(null);
+    console.log(selectedOption);
 
     const [logoImage, setLogoImage] = useState('');
 
     const [selectedValue, setSelectedValue] = React.useState();
 
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
+    const handleChange = (e) => {
+        setSelectedValue(e.target.value);
+        setSelectedOption([...selectedOption]);
     };
 
     const logoUpload = (e) => {
@@ -490,10 +493,8 @@ export default function ImageUpload() {
 
     const { register, handleSubmit, formState: { errors } , reset} = useForm({
         resolver: yupResolver(schema),
-        defaultValues: {
-            multipleSelect: []
-        }
     });
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -521,7 +522,7 @@ export default function ImageUpload() {
                             accept="image/*"
                             style={{ display: 'none' }}
                             id="contained-button-file"
-                            {...register("file")}
+                            {...register("file", {onChange: (e) => handleFileChange(e)})}
                         />
 
                         <label htmlFor="contained-button-file">
@@ -607,15 +608,15 @@ export default function ImageUpload() {
                         Choose 1-5 business categories for your picture
                     </Typography>
                     <Select
-                        isMulti
-                        styles={customStyles}
-                        components={{ DropdownIndicator }}
-                        options={options}
-                        {...register('multipleSelect')}
-                        required={true}
-                        name="multipleSelect"
+                      isMulti
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={options}
+                      styles={customStyles}
+                      placeholder={<div className={classes.placeholder}>Select category</div>}
+                      components={{ DropdownIndicator }}
                     />
-                    <div className={classes.invalidFeedback}>{errors.multipleSelect?.message}</div>
+                    <div className={classes.invalidFeedback}>{errors.Keywords?.message}</div>
                     <br/><br/>
 
                 </Grid>

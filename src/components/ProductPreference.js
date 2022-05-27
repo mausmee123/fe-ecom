@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     createTheme,
     makeStyles,
@@ -11,6 +11,27 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Select, { components } from 'react-select';
 import Radio from "@material-ui/core/Radio/Radio";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+    ProductCategory: yup.string().required(),
+    SubCategory1: yup.string().required(),
+    SubCategory2: yup.string().required(),
+    SubCategory3: yup.string().required(),
+    ListCategory: yup.string().required(),
+    file: yup.mixed()
+      .test('required', "You need to provide a file", (value) =>{
+          return value && value.length
+      } )
+      .test("fileSize", "The file is too large", (value, context) => {
+          return value && value[0] && value[0].size <= 200000;
+      })
+      .test("type", "We only support jpeg", function (value) {
+          return value && value[0] && value[0].type === "image/jpeg";
+      }),
+});
 
 const theme = createTheme({
     palette: {
@@ -36,10 +57,6 @@ const useStyle = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        [theme.breakpoints.down('sm')]: {
-        height: '38px',
-        margin: '5px 0',
-        },
     },
     header: {
         fontSize: '22px',
@@ -67,11 +84,10 @@ const useStyle = makeStyles((theme) => ({
     },
     inputField: {
         width: '90%',
-        height: '20px',
+        height: '38px',
+        padding: '0 10px',
         [theme.breakpoints.down('sm')]: {
             height: '38px',
-            margin: '5px 0',
-            padding: '5px 14px',
         }
     },
     deleteCategoryButton: {
@@ -81,7 +97,7 @@ const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         paddingLeft: '15px',
         paddingRight: '15px',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: '32px'
         },
         [theme.breakpoints.down('sm')]: {
@@ -127,6 +143,10 @@ const useStyle = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+            margin: '0 auto',
+            maxWidth: '100%',
+        },
     },
     logoSvgIcon: {
         width: '50px',
@@ -156,7 +176,9 @@ const useStyle = makeStyles((theme) => ({
         paddingLeft: '15px',
         paddingRight: '15px',
         textTransform: 'capitalize',
-        [theme.breakpoints.down('md')]: {},
+        [theme.breakpoints.down('sm')]: {
+            marginBottom: '15px',
+        },
     },
     previewAndPublish: {
         color: '#fff',
@@ -241,7 +263,7 @@ const customStyles = {
     }),
     control: (provider, state) => ({
         ...provider,
-        height: '56px',
+        height: '38px',
         '@media only screen and (max-width: 960px)': {
             ...provider['@media only screen and (max-width: 960px)'],
             height: '38px'
@@ -253,6 +275,9 @@ const options = [
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' }
 ];
+
+
+
 const CaretDownIcon = () => {
     return <ArrowDropDownIcon fontSize="large" />;
 };
@@ -265,14 +290,42 @@ const DropdownIndicator = (props) => {
 };
 
 const ProductPreference = () => {
+    const classes = useStyle();
     const [selectedValue, setSelectedValue] = React.useState('a');
+    const [image, setImage] = useState();
+    const [logoImage, setLogoImage] = useState('');
+
+    const handleFileChange = (e) => {
+        const [file] = e.target.files;
+        setImage([...image, { img: URL.createObjectURL(file) }]);
+        console.log('image', image);
+    };
+
+    const onSubmitHandler = (data) => {
+        console.log({ data });
+        reset();
+    };
+
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
     };
-    const classes = useStyle();
+
+    const logoUpload = (e) => {
+        console.log('logoImage1', logoImage);
+        const [img] = e.target.files;
+        const image1 = URL.createObjectURL(img);
+        console.log('image1', image1);
+        setLogoImage(URL.createObjectURL(img));
+    };
+
+    const { register, setValue, handleSubmit, formState: { errors } , reset} = useForm({
+        resolver: yupResolver(schema),
+    });
+
     return (
         <ThemeProvider theme={theme}>
             <Grid container style={{ width: '100%'}}>
+                <form onSubmit={handleSubmit(e => onSubmitHandler(e))}>
                 <Grid container className={classes.productCategories} style={{ paddingBottom: "15px"}} item xs={12}>
                     <Grid className={classes.productCategoriesTitle} item xs={12}>
                         <Typography className={classes.header}>
@@ -288,45 +341,53 @@ const ProductPreference = () => {
                             className={classes.input}
                             variant="outlined"
                             InputProps={{ classes: { input: classes.inputField } }}
+                            {...register("ProductCategory")}
                         />
+                        <div className="invalid-feedback">{errors.ProductCategory?.message}</div>
                     </Grid>
 
                     <Grid item lg={4} md={6} sm={6} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
-                            Insert/edit Product Category
+                            Add Sub-Category Level 1
                         </Typography>
                         <TextField
                             className={classes.input}
                             variant="outlined"
                             InputProps={{ classes: { input: classes.inputField } }}
+                            {...register("SubCategory1")}
                         />
+                        <div className="invalid-feedback">{errors.SubCategory1?.message}</div>
                     </Grid>
 
                     <Grid item lg={4} md={6} sm={6} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
-                            Insert/edit Product Category
+                            Add Sub-Category Level 2
                         </Typography>
                         <TextField
                             className={classes.input}
                             variant="outlined"
                             InputProps={{ classes: { input: classes.inputField } }}
+                            {...register("SubCategory2")}
                         />
+                        <div className="invalid-feedback">{errors.SubCategory2?.message}</div>
                     </Grid>
 
                     <Grid item lg={4} md={6} sm={6} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
-                            Insert/edit Product Category
+                            Add Sub-Category Level 3
                         </Typography>
                         <TextField
                             className={classes.input}
                             variant="outlined"
                             InputProps={{ classes: { input: classes.inputField } }}
+                            {...register("SubCategory3")}
                         />
+                        <div className="invalid-feedback">{errors.SubCategory3?.message}</div>
                     </Grid>
 
                     <Grid item lg={4} md={6} sm={12} xs={12} className={classes.inputFieldWrapper}>
                         <Typography className={classes.inputFieldTitle}>
-                            Insert/edit Product Category
+                            List of all categories
                         </Typography>
                         {/*<TextField className={classes.input} variant='outlined' InputProps={{classes: { input: classes.inputField }}}/>*/}
                         <Select
@@ -335,7 +396,9 @@ const ProductPreference = () => {
                             placeholder={<div className={classes.placeholder}>Select category</div>}
                             components={{ DropdownIndicator }}
                             options={options}
+                            {...register("ListCategory")}
                         />
+                        <div className="invalid-feedback">{errors.ListCategory?.message}</div>
                     </Grid>
 
                     <Grid container item lg={4} md={6} sm={12} xs={12} className={classes.previewAndPublishButton}>
@@ -355,6 +418,7 @@ const ProductPreference = () => {
                             variant="contained"
                             color="secondary"
                             className={classes.previewAndPublish}
+                            type="submit"
                         >
                             Publish Category
                         </Button>
@@ -362,7 +426,7 @@ const ProductPreference = () => {
                     <Grid
                         item
                         className="selectBtn"
-                        xs={12} md={6} sm={6} lg={4}
+                        xs={12} md={6} sm={12} lg={4}
                     >
                         <Typography className='inputFieldTitle'>Pick ring color</Typography>
                         <Grid container item xs={12} className={classes.name}>
@@ -411,7 +475,7 @@ const ProductPreference = () => {
 
                     <Grid
                         item
-                        xs={4} md={6} sm={6} lg={4}
+                        xs={12} md={6} sm={12} lg={4}
                         className="uploadlIcon"
                     >
                         <div className={classes.uploadIcon}>
@@ -431,111 +495,33 @@ const ProductPreference = () => {
                                 />
                             </svg>
                             <input
-                                type="file"
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                                id="logo-upload-file"
-                                // onChange={(e) => logoUpload(e)}
+                              type="file"
+                              accept="image/*"
+                              style={{ display: 'none' }}
+                              id="contained-button-file"
+                              {...register("file")}
                             />
-                            <label htmlFor="logo-upload-file">
+                            <label htmlFor="contained-button-file">
                                 <Button
-                                    variant="contained"
-                                    classes={{ containedPrimary: classes.uploadLogoButton }}
-                                    color="primary"
-                                    component="span"
+                                  variant="contained"
+                                  classes={{ containedPrimary: classes.uploadButton }}
+                                  color="primary"
+                                  component="span"
                                 >
-                                    Upload Icon
+                                    Upload Image
                                 </Button>
                             </label>
+                            <div className={classes.invalidFeedback}>{errors.file?.message}</div>
                             <Typography className={classes.dragLogoTitle}>
                                 or drag and drop image here
                             </Typography>
+
                         </div>
                     </Grid>
 
                 </Grid>
-
-                <Grid container className={classes.keyword} item xs={12}>
-                    <Grid className={classes.productCategoriesTitle} item xs={12}>
-                        <Typography className={classes.header}>
-                            Create/Delete Keyword Preference
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6} className={classes.inputFieldWrapper}>
-                        <Typography className={classes.inputFieldTitle}>
-                            Insert New Category
-                        </Typography>
-                        <TextField
-                            className={classes.input}
-                            variant="outlined"
-                            InputProps={{ classes: { input: classes.inputField } }}
-                        />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.previewAndPublish}
-                        >
-                           Add Category
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} className={classes.inputFieldWrapper}>
-                        <Typography className={classes.inputFieldTitle}>
-                            List of all Category
-                        </Typography>
-                        {/*<TextField className={classes.input} variant='outlined' InputProps={{classes: { input: classes.inputField }}}/>*/}
-                        <Select
-                            styles={customStyles}
-                            className={classes.input}
-                            placeholder={<div className={classes.placeholder}>Select category</div>}
-                            components={{ DropdownIndicator }}
-                            options={options}
-                        />
-                        <Button variant="contained" className={classes.deleteCategory}>
-                            Delete Category
-                        </Button>
-                    </Grid>
-                </Grid>
-                <Grid container className={classes.keyword} item xs={12}>
-                    <Grid className={classes.productCategoriesTitle} item xs={12}>
-                        <Typography className={classes.header}>
-                            Create/Delete Business Categories Preference
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6} className={classes.inputFieldWrapper}>
-                        <Typography className={classes.inputFieldTitle}>
-                            Insert New Business Category
-                        </Typography>
-                        <TextField
-                            className={classes.input}
-                            variant="outlined"
-                            InputProps={{ classes: { input: classes.inputField } }}
-                        />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.previewAndPublish}
-                        >
-                            Add Business
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} className={classes.inputFieldWrapper}>
-                        <Typography className={classes.inputFieldTitle}>
-                            List of all Business Category
-                        </Typography>
-                        {/*<TextField className={classes.input} variant='outlined' InputProps={{classes: { input: classes.inputField }}}/>*/}
-                        <Select
-                            styles={customStyles}
-                            className={classes.input}
-                            placeholder={<div className={classes.placeholder}>Select category</div>}
-                            components={{ DropdownIndicator }}
-                            options={options}
-                        />
-                        <Button variant="contained" className={classes.deleteCategory}>
-                            Delete Business
-                        </Button>
-                    </Grid>
-                </Grid>
                 {/*<Grid className={classes.businessCategories} item xs={12}></Grid>*/}
+                </form>
             </Grid>
         </ThemeProvider>
     );
