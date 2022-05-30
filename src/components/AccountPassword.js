@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 const schema = yup.object().shape({
   password: yup.string()
     .required('Password is required')
-    .min(8, 'Password length should be at least 4 characters'),
+    .min(8, 'Password length should be at least 8 characters'),
   confirm_password: yup.string()
     .required('Confirm Password is required')
     .oneOf([yup.ref('password')], 'Passwords must and should match'),

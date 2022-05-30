@@ -9,11 +9,13 @@ import {
 } from '@material-ui/core';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import Select, { components } from 'react-select';
+import { components } from 'react-select';
 import Radio from "@material-ui/core/Radio/Radio";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 const schema = yup.object().shape({
     ProductCategory: yup.string().required(),
@@ -395,9 +397,14 @@ const ProductPreference = () => {
                             className={classes.input}
                             placeholder={<div className={classes.placeholder}>Select category</div>}
                             components={{ DropdownIndicator }}
-                            options={options}
                             {...register("ListCategory")}
-                        />
+                        >
+                            {options.map(option => (
+                              <MenuItem key={option.value} value={option.value}>
+                                  {option.label}
+                              </MenuItem>
+                            ))}
+                        </Select>
                         <div className="invalid-feedback">{errors.ListCategory?.message}</div>
                     </Grid>
 
