@@ -68,7 +68,7 @@ export default function CustomNoRowsOverlay() {
                     </g>
                 </g>
             </svg>
-            <Box sx={{mt: 1}}>No Data Found</Box>
+            <Box style={{mt: 1}}>No Data Found</Box>
         </StyledGridOverlay>
     );
 }

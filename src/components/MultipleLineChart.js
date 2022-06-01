@@ -22,7 +22,7 @@ const MultipleLineChart = ({todo, onDelete}) => {
 
     return (
         <div>
-            <Box sx={{ width: '100%' }}>
+            <Box style={{ width: '100%' }}>
                 <Grid container spacing={4} className="multi-chart">
                     <Grid container sm={12} md={6} lg={6} className="chart-desc">
                         <Grid item className="img-item">

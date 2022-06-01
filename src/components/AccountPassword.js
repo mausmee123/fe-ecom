@@ -5,12 +5,12 @@ import { useForm } from "react-hook-form";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button";
-
+import CustomTextField from '../components/common/InputField';
 
 const schema = yup.object().shape({
   password: yup.string()
     .required('Password is required')
-    .min(8, 'Password length should be at least 8 characters'),
+    .min(8, 'Password length should be at least 4 characters'),
   confirm_password: yup.string()
     .required('Confirm Password is required')
     .oneOf([yup.ref('password')], 'Passwords must and should match'),
@@ -23,7 +23,7 @@ const AccountPassword = () => {
     reset();
   };
 
-  const { register, setValue, handleSubmit, formState: { errors } , reset} = useForm({
+  const { register, handleSubmit, formState: { errors } , reset} = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -33,23 +33,25 @@ const AccountPassword = () => {
         <Grid item xs={12} md={6} style={{ marginTop: 15 }}>
 
           <Grid item xs={12}>
-            <TextField
+            <CustomTextField
+              color="primary"
+              disableUnderline={false}
               label="Change Password"
-              variant="outlined"
-              style={{ marginTop: 11,display: "grid" }}
+              variant="filled"
               type="password"
-              {...register("password")}
+              validation={register("password")}
             />
             <div className="invalid-feedback">{errors.password?.message}</div>
 
           </Grid>
           <Grid item xs={12}>
-            <TextField
+            <CustomTextField
+              color="primary"
+              disableUnderline={false}
               label="Confirm new password"
-              variant="outlined"
-              style={{ marginTop: 11,display: "grid" }}
+              variant="filled"
               type="password"
-              {...register("confirm_password")}
+              validation={register("confirm_password")}
             />
             <div className="invalid-feedback">{errors.confirm_password?.message}</div>
 
@@ -62,5 +64,6 @@ const AccountPassword = () => {
     </form>
   );
 };
+
 
 export default AccountPassword;

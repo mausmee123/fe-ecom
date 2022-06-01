@@ -7,7 +7,7 @@ import BusinessPreference from "../../components/BusinessPreference";
 const useStyle = makeStyles((theme) => ({
     first: {
         width: '50%',
-        margin: '50px auto',
+        margin: '50px auto 70px',
         maxWidth: 'unset',
         flexBasis: 'unset',
         padding: '0 50px !important',
@@ -16,6 +16,9 @@ const useStyle = makeStyles((theme) => ({
         },
         [theme.breakpoints.down('sm')]: {
             width: '99%'
+        },
+        [theme.breakpoints.down('xs')]: {
+            margin: '50px auto 0',
         }
     },
     second: {

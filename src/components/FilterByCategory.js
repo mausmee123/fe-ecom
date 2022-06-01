@@ -3,7 +3,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
 import Button from "@material-ui/core/Button";
-import "../pages/admin/Publish.scss"
+import "../pages/admin/Publish.scss";
+import "../pages/admin/Account.scss";
 
 
 const FilterByCategory = (props) => {

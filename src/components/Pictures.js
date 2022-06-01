@@ -88,7 +88,7 @@ const useStyle = makeStyles((theme) => ({
     closes: {
         position: 'absolute',
         right: '15px',
-        zIndex: '100',
+        zIndex: '1',
         padding: '4px 3px',
         color: '#fff',
         fontWeight: 'bold',

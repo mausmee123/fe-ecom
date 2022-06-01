@@ -57,13 +57,12 @@ const Statistics = () => {
 
 
       <Typography className="toggle-text" color="text.secondary">Analytics show</Typography>
-      <AntSwitch checked={toggle} className="toggle-btn"  onClick={handleClick} />
+      <AntSwitch checked={toggle} className="switch toggle-btn"  onClick={handleClick} />
 
       {toggle &&
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-
-
+        <SiteVisitors/>
         </Grid>
 
         <Grid item xs={12} md={6}>

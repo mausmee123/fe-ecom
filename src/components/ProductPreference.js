@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
     createTheme,
     makeStyles,
@@ -8,14 +8,14 @@ import {
     TextField,
 } from '@material-ui/core';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { components } from 'react-select';
+import Select from "@material-ui/core/Select";
 import Radio from "@material-ui/core/Radio/Radio";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import BcategoriesPreference from "./BcategoriesPreference";
+import KeywordPreference from "./KeywordPreference";
 import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 
 const schema = yup.object().shape({
     ProductCategory: yup.string().required(),
@@ -23,16 +23,16 @@ const schema = yup.object().shape({
     SubCategory2: yup.string().required(),
     SubCategory3: yup.string().required(),
     ListCategory: yup.string().required(),
-    file: yup.mixed()
-      .test('required', "You need to provide a file", (value) =>{
-          return value && value.length
-      } )
-      .test("fileSize", "The file is too large", (value, context) => {
-          return value && value[0] && value[0].size <= 200000;
-      })
-      .test("type", "We only support jpeg", function (value) {
-          return value && value[0] && value[0].type === "image/jpeg";
-      }),
+    File: yup.mixed()
+        .test('required', "You need to provide a file", (value) =>{
+            return value && value.length
+        } )
+        .test("fileSize", "The file is too large", (value, context) => {
+            return value && value[0] && value[0].size <= 200000;
+        })
+        .test("type", "We only support jpeg", function (value) {
+            return value && value[0] && value[0].type === "image/jpeg";
+        }),
 });
 
 const theme = createTheme({
@@ -83,6 +83,7 @@ const useStyle = makeStyles((theme) => ({
     },
     input: {
         display:'grid',
+        height: '38px'
     },
     inputField: {
         width: '90%',
@@ -231,99 +232,28 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-const customStyles = {
-    multiValue: (provided, state) => ({
-        ...provided,
-        backgroundColor: '#007FFF',
-        // padding: '4px',
-        alignItems: 'flex-start'
-    }),
-    multiValueLabel: (provided, state) => ({
-        ...provided,
-        color: '#fff',
-        fontSize: '17px'
-    }),
-    multiValueRemove: (provided, state) => ({
-        ...provided,
-        color: '#fff',
-        '&:hover': {
-            backgroundColor: '#007fff',
-            color: '#fff'
-        }
-    }),
-    container: (provider, state) => ({
-        ...provider,
-        width: '100%',
-    }),
-    indicatorSeparator: (provider, state) => ({
-        ...provider,
-        display: 'none'
-    }),
-    dropdownIndicator: (provider, state) => ({
-        ...provider,
-        padding: '0px'
-    }),
-    control: (provider, state) => ({
-        ...provider,
-        height: '38px',
-        '@media only screen and (max-width: 960px)': {
-            ...provider['@media only screen and (max-width: 960px)'],
-            height: '38px'
-        }
-    })
-};
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' }
 ];
 
-
-
-const CaretDownIcon = () => {
-    return <ArrowDropDownIcon fontSize="large" />;
-};
-const DropdownIndicator = (props) => {
-    return (
-        <components.DropdownIndicator {...props}>
-            <CaretDownIcon />
-        </components.DropdownIndicator>
-    );
-};
-
 const ProductPreference = () => {
-    const classes = useStyle();
     const [selectedValue, setSelectedValue] = React.useState('a');
-    const [image, setImage] = useState();
-    const [logoImage, setLogoImage] = useState('');
 
-    const handleFileChange = (e) => {
-        const [file] = e.target.files;
-        setImage([...image, { img: URL.createObjectURL(file) }]);
-        console.log('image', image);
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
     };
-
     const onSubmitHandler = (data) => {
         console.log({ data });
         reset();
     };
 
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
-
-    const logoUpload = (e) => {
-        console.log('logoImage1', logoImage);
-        const [img] = e.target.files;
-        const image1 = URL.createObjectURL(img);
-        console.log('image1', image1);
-        setLogoImage(URL.createObjectURL(img));
-    };
-
-    const { register, setValue, handleSubmit, formState: { errors } , reset} = useForm({
+    const { register, handleSubmit, formState: { errors } , reset} = useForm({
         resolver: yupResolver(schema),
     });
 
+    const classes = useStyle();
     return (
         <ThemeProvider theme={theme}>
             <Grid container style={{ width: '100%'}}>
@@ -393,16 +323,14 @@ const ProductPreference = () => {
                         </Typography>
                         {/*<TextField className={classes.input} variant='outlined' InputProps={{classes: { input: classes.inputField }}}/>*/}
                         <Select
-                            styles={customStyles}
+                            variant="outlined"
                             className={classes.input}
-                            placeholder={<div className={classes.placeholder}>Select category</div>}
-                            components={{ DropdownIndicator }}
                             {...register("ListCategory")}
                         >
                             {options.map(option => (
-                              <MenuItem key={option.value} value={option.value}>
-                                  {option.label}
-                              </MenuItem>
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
                             ))}
                         </Select>
                         <div className="invalid-feedback">{errors.ListCategory?.message}</div>
@@ -502,33 +430,34 @@ const ProductPreference = () => {
                                 />
                             </svg>
                             <input
-                              type="file"
-                              accept="image/*"
-                              style={{ display: 'none' }}
-                              id="contained-button-file"
-                              {...register("file")}
+                                type="file"
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                id="logo-upload-file"
+                                {...register("File")}
                             />
-                            <label htmlFor="contained-button-file">
+                            <p className="invalid-feedback">{errors.File?.message}</p>
+                            <label htmlFor="logo-upload-file">
                                 <Button
-                                  variant="contained"
-                                  classes={{ containedPrimary: classes.uploadButton }}
-                                  color="primary"
-                                  component="span"
+                                    variant="contained"
+                                    classes={{ containedPrimary: classes.uploadLogoButton }}
+                                    color="primary"
+                                    component="span"
                                 >
-                                    Upload Image
+                                    Upload Icon
                                 </Button>
                             </label>
-                            <div className={classes.invalidFeedback}>{errors.file?.message}</div>
                             <Typography className={classes.dragLogoTitle}>
                                 or drag and drop image here
                             </Typography>
-
                         </div>
                     </Grid>
 
                 </Grid>
                 {/*<Grid className={classes.businessCategories} item xs={12}></Grid>*/}
                 </form>
+                <KeywordPreference/>
+                <BcategoriesPreference/>
             </Grid>
         </ThemeProvider>
     );

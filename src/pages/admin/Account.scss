@@ -147,6 +147,10 @@ $color_blue: #007FFF;
   .btn-group {
     float: right;
     margin-top: -9px;
+    @media only screen and (max-width: 479px) {
+      float: none;
+      margin-top: 10px;
+    }
   }
 }
 .filterLabel{
@@ -494,4 +498,7 @@ $color_blue: #007FFF;
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+}
+.MuiAutocomplete-input{
+  padding: 0 !important;
 }

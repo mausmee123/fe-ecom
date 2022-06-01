@@ -53,7 +53,7 @@ const CustomPlan = (props) => {
                         ))}
                     </List>
                 </CardContent>
-                <CardActions sx={{padding: "10px 40px"}} >
+                <CardActions>
                     <ListItem className="list-item">
                         <ListItemIcon>
                             <NoteAddIcon className="check-circle" color="primary"/>

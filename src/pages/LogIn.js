@@ -31,8 +31,9 @@ const useStyle = makeStyles((theme) => ({
         height: '100vh',
         justifyContent: 'center',
         width: '100vw',
-        [theme.breakpoints.down('sm')]: {
-            // height: 'auto',
+        marginBottom:'40px',
+        [theme.breakpoints.down('lg')]: {
+            height: 'auto',
             // marginTop: "40px",
             // overflow: 'hidden'
         }
@@ -60,6 +61,7 @@ const useStyle = makeStyles((theme) => ({
         fontSize: '30px',
         color: '#11cb5f',
         marginTop: '10px',
+        textAlign:'center',
         [theme.breakpoints.down('xs')]: {
             fontSize: '20px'
         }

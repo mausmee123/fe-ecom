@@ -1,25 +1,21 @@
 import React, {Suspense, lazy} from 'react';
 import {Route, Routes} from 'react-router-dom';
-import Header from './components/common/Header';
 import LogIn from './pages/LogIn';
 import SignUp from "./pages/SignUp";
-import Pictures from './pages/company_deshboard/publish/Pictures';
-import ImageUpload from './pages/company_deshboard/publish/ImageUpload';
-
-// import Publish from "./pages/admin_deshboard/publish";
-// import AccountPreference from './pages/admin_deshboard/publish/Product_Categories_Preference';
-// import Publish from './pages/company_deshboard/publish';
-
 import Loader from './components/common/Loader';
-// import Footer from './pages/admin/Footer';
 import Footer from './components/common/Footer';
-
+import ContactUs from "./pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
+import PricingSubscription from "./pages/PricingSubscription";
+import PageHeader from "./components/common/PageHeader";
+import TrendingPost from "./pages/TrendingPost";
+import SuggestedPlan from "./pages/SuggestedPlan";
+import CustomerPlan from "./components/CustomerPlan";
 const NoMatch = lazy(() => import('./pages/NoMatch'));
 const Home = lazy(() => import('./components/common/Home'));
 const Publish = lazy(() => import('./pages/admin/Publish'));
 const Account = lazy(() => import('./pages/admin/Account'));
 const Statistics = lazy(() => import('./pages/admin/Statistics'));
-// const AdminHeader = lazy(() => import("./pages/admin/AdminHeader"));
 const AdminHeader = lazy(() => import("./components/common/AdminHeader"));
 const Company_Publish = lazy(() => import('./pages/company/Publish'));
 const Company_Account = lazy(() => import('./pages/company/Account'));
@@ -32,7 +28,15 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/login" element={<LogIn/>}/>
-                    <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/sign-up" element={<SignUp/>}/>
+                    <Route path="/suggested-plan" element={<SuggestedPlan/>}/>
+                    <Route path="/customer-plan" element={<CustomerPlan/>}/>
+                    <Route path="/pages" element={<PageHeader/>}>
+                        <Route index={true} element={<TrendingPost/>}/>
+                        <Route path="about-us" element={<AboutUs/>}/>
+                        <Route path="pricing-Subscription" element={<PricingSubscription/>}/>
+                        <Route path="contact-us" element={<ContactUs/>}/>
+                    </Route>
                     <Route path="/admin" element={<AdminHeader/>}>
                         <Route index={true} element={<Publish/>}/>
                         <Route path="statistics" element={<Statistics/>}/>
@@ -43,7 +47,6 @@ function App() {
                         <Route path="statistics" element={<Company_Statistics/>}/>
                         <Route path="account" element={<Company_Account/>}/>
                     </Route>
-
                     <Route path="*" element={<NoMatch/>}/>
                 </Routes>
             </Suspense>

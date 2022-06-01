@@ -1,0 +1,904 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css");
+
+$color_red: #C32525;
+$color_green: #00D037;
+$color_yellow: #FCB900;
+$color_blue: #007FFF;
+
+.bg-red{
+  background-color: $color_red;
+}
+.bg-green{
+  background-color: $color_green;
+}
+.bg-yellow{
+  background-color: $color_yellow;
+}
+.bg-blue{
+  background-color: $color_blue;
+}
+.text-red{
+  color: $color_red;
+}
+.text-green{
+  color: $color_green;
+}
+.text-yellow{
+  color: $color_yellow;
+}
+.text-blue{
+  color: $color_blue;
+}
+.border-red{
+  border-color: $color_red;
+}
+.border-green{
+  border-color: $color_green;
+}
+.border-yellow{
+  border-color: $color_yellow;
+}
+.border-blue{
+  border-color: $color_blue;
+}
+
+.Contact-desc{
+  text-transform: capitalize;
+  li span {
+    font-size: 20px;
+    text-transform: capitalize;
+    font-weight: 500;
+    @media only screen and (max-width: 991px)  {
+      font-size: 18px;
+    }
+  }
+  li p {
+    font-size: 16px;
+    color: grey;
+    text-transform: capitalize;
+    @media only screen and (max-width: 991px)  {
+      font-size: 14px;
+    }
+  }
+  .contact-card {
+    border: 1px solid $color_blue;
+    margin: 0 auto;
+    max-width: 40%;
+    box-shadow: none !important;
+    padding: 10px;
+    @media only screen and (max-width: 1200px)  {
+      max-width: 80%;
+    }
+    .MuiInput-root:before {
+      border-color: $color_blue;
+    }
+    .card-input input {
+      display: none;
+    }
+    .contact-action {
+      border-top: 1px solid $color_blue;
+      display: block;
+
+      .cn-ct {
+        font-size: 14px;
+        color: #808080;
+        margin: 0 10px;
+      }
+      Button {
+        float: right;
+        text-transform: capitalize;
+        height: 40px;
+        width: 30%;
+        font-size: 15px;
+        color: #ffffff;
+      }
+    }
+    .contact-cnt {
+      padding: 0;
+      @media only screen and (max-width: 1024px)  {
+        overflow: scroll;
+      }
+    }
+    textarea {
+      border-width: 0;
+      outline: 0;
+    }
+    label.card-input {
+      float: left;
+    }
+  }
+  .contact-card1 {
+    border: 1px solid $color_green !important;
+    margin-bottom: 50px !important;
+    .MuiInput-root:before {
+      border-color: $color_green !important;
+    }
+    .contact-action1 {
+      border-top: 1px solid $color_green !important;
+    }
+  }
+  .list{
+    display: inline-block ;
+    text-align: center;
+    .text {
+      display: inline-block ;
+      text-align: left;
+      padding: 0 15px;
+      color: $color_blue;
+    }
+  }
+  .rating {
+    box-shadow: none;
+    margin: 0 auto;
+    max-width: 40%;
+    padding: 20px 0;
+    .feed-text {
+      span {
+        font-size: 25px;
+        color: $color_green;
+      }
+    }
+    .feed-txt {
+      .feed-text1 {
+      span {
+        color: $color_green;
+      }
+    }
+      P{
+        font-size: 12px;
+      }
+    }
+
+  }
+  .title-icon{
+    float: left;
+  }
+  .title-text{
+    float: left;
+  }
+}
+
+.About-us {
+  padding: 0 15px;
+  .About-head {
+    float: left;
+    width: 100%;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    margin-bottom: 30px;
+    span.MuiTypography-root {
+      font-size: 25px;
+      text-transform: capitalize;
+      @media only screen and (max-width: 1200px)  {
+        font-size: 20px;
+      }
+    }
+    .MuiListItemButton-root {
+      padding: 0 15px;
+    }
+  }
+  .About-content {
+    float: left;
+    width: 100%;
+    margin-bottom: 50px;
+    .About-title {
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 10px;
+      display: flex;
+      padding: 10px;
+    }
+    .About-p{
+      padding: 2% 20% 0;
+      text-align: justify;
+      @media only screen and (max-width: 1500px)  {
+        padding: 2% 10% 0;
+      }
+      @media only screen and (max-width: 991px)  {
+        padding: 2% 0 0;
+      }
+    }
+  }
+}
+
+.MuiIconButton-colorPrimary:hover {
+  background-color: unset !important;
+}
+#mui-component-select-ListCategory,#mui-component-select-categories,#mui-component-select-AllKeyword {
+  padding: 10px;
+}
+
+
+.header-top {
+  float: left;
+  width: 100%;
+  .header-left {
+    margin: 20px 0 0 0;
+    position: relative;
+    float: left;
+    width: 70%;
+    @media only screen and (max-width: 1750px) {
+      width: 65%;
+    }
+    @media only screen and (max-width: 1500px) {
+      width: 60%;
+    }
+    @media only screen and (max-width: 1170px) {
+      width: 50%;
+    }
+    @media only screen and (max-width: 899px) {
+      width: 79%;
+    }
+    @media only screen and (max-width: 499px) {
+      width: 78%;
+      margin: 10px 0 0 0;
+    }
+    .main-title {
+      float: left;
+      padding: 0 20px;
+      text-align: left;
+      @media only screen and (max-width: 540px) {
+        width: 80px;
+      }
+      @media only screen and (max-width: 899px) {
+        padding: 0 10px;
+      }
+      @media only screen and (max-width: 499px) {
+        width: 40px;
+      }
+    }
+    .logo-name {
+      text-transform: capitalize;
+      font-weight: 600 !important;
+      @media only screen and (max-width: 499px) {
+        font-size: 16px;
+        line-height: 20px;
+      }
+    }
+    .search-bar {
+      position: relative;
+      float: left;
+      width: 84%;
+      @media only screen and (max-width: 1750px) {
+        width: 80%;
+      }
+      @media only screen and (max-width: 1500px) {
+        width: 70%;
+      }
+      @media only screen and (max-width: 1199px) {
+        width: 60%;
+      }
+      @media only screen and (max-width: 499px) {
+        width: 75%;
+      }
+    }
+  }
+  .header-right {
+    float: left;
+    width: 30%;
+    margin: 15px 0 0 0;
+    @media only screen and (max-width: 1750px) {
+      width: 35%;
+    }
+    @media only screen and (max-width: 1500px) {
+      width: 40%;
+      float: right;
+    }
+    @media only screen and (max-width: 1170px) {
+      width: 50%;
+    }
+    @media only screen and (max-width: 899px) {
+      width: 105px;
+      float: right;
+    }
+    @media only screen and (max-width: 499px) {
+      width: 70px;
+    }
+    .icon-right {
+      float: left;
+    }
+    .icon-right svg{
+      font-size: 50px;
+      @media only screen and (max-width: 499px) {
+        font-size: 36px;
+        top: -4px;
+        position: relative;
+      }
+    }
+    .h-menuitem {float: left;}
+    a{
+      text-decoration: none;
+    }
+    button {
+      @media only screen and (max-width: 499px) {padding: 4px;    margin-top: 0;}
+    }
+    svg{
+      @media only screen and (max-width: 499px) {
+        font-size: 20px;
+      }
+    }
+    .d-icon{
+      color: #fff;
+      border-radius: 5px;
+      background-color: $color_blue;
+      margin-top: 5px;
+      padding: 8px;
+      @media only screen and (max-width: 499px) {margin-top: 0;padding: 4px;}
+    }
+  }
+}
+
+
+
+.drop-down {
+  position: fixed;
+  top: 68px !important;
+  right: 15px;
+  left: auto !important;
+  color: rgba(0, 0, 0, 0.87);
+  -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  width: 250px;
+  .h-menuitem {
+    float: left;
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .h-icon{
+      color: #fff;
+    }
+  }
+}
+/////-------------------contact us---------------------//////
+.Contact-desc{
+  li span {
+    font-size: 25px;
+    text-transform: capitalize;
+    @media only screen and (max-width: 991px)  {
+      font-size: 18px;
+    }
+  }
+  li p {
+    font-size: 16px;
+    color: grey;
+    text-transform: capitalize;
+    @media only screen and (max-width: 991px)  {
+      font-size: 14px;
+    }
+  }
+  .contact-card {
+    border: 1px solid $color_blue;
+    margin: 0 auto;
+    max-width: 40%;
+    box-shadow: none !important;
+    padding: 10px;
+    @media only screen and (max-width: 1200px)  {
+      max-width: 80%;
+    }
+    .MuiInput-root:before {
+      border-color: $color_blue;
+    }
+    .card-input input {
+      display: none;
+    }
+    .contact-action {
+      border-top: 1px solid dodgerblue;
+      display: block;
+
+      .cn-ct {
+        font-size: 14px;
+        color: #808080;
+        margin: 0 10px;
+      }
+      Button {
+        float: right;
+        text-transform: capitalize;
+        height: 40px;
+        width: 30%;
+        font-size: 15px;
+        color: #ffffff;
+      }
+    }
+    .contact-cnt {
+      padding: 0;
+    }
+    textarea {
+      border-width: 0;
+      outline: 0;
+    }
+    label.card-input {
+      float: left;
+    }
+  }
+  .list{
+    display: inline-block ;
+    text-align: center;
+    .text {
+      display: inline-block ;
+      text-align: left;
+      padding: 0 15px;
+      color: $color_blue;
+    }
+  }
+}
+.trending-slider{
+  margin-bottom: 50px;
+}
+.post-slider.post-model {
+  margin: 5%;
+}
+.post-slider{
+  padding: 0 0 0 10px;
+  .title{
+    text-align: left;
+    font-weight: 600;
+    margin: 10px 0 15px 0;
+  }
+  .card-wrap {
+    box-shadow: none;
+    border: 1px solid #e4e4e4;
+    border-radius: 10px;
+    outline: 0;
+    img {
+      border-radius: 10px;
+      max-width: 100%;
+    }
+    .card-content{
+      padding: 4px 20px;
+      @media only screen and (max-width: 479px) {
+        padding: 4px 5px;
+      }
+      .title{
+        float: left;
+        margin: 0;
+        @media only screen and (max-width: 1199px) {
+          span{
+            font-size: 14px;
+            line-height: 2.5;
+          }
+        }
+      }
+      .text-block{
+        float: right;
+        @media only screen and (max-width: 1199px) {
+          span{
+            font-size: 14px;
+          }
+        }
+      }
+      Button{
+        min-width: 34px;
+      }
+    }
+  }
+  .tred-title{
+    text-align: left;
+    font-weight: 600;
+    margin: 15px 0;
+  }
+  .trending-grid{
+    overflow: hidden;
+    display: -webkit-box;
+    flex-wrap: inherit;
+    white-space: nowrap;
+  }
+  .slick-slide > div {
+    margin: 0 20px 0 0;
+    @media only screen and (max-width: 575px) {
+      margin: 0 10px 0 0;
+    }
+  }
+  .slick-arrow {
+    font-size: 4.5rem;
+    opacity: .75;
+    color: $color_blue;
+    top: -24px;
+    @media only screen and (max-width: 575px) {
+      font-size: 2.5rem;
+    }
+  }
+  .slick-next {
+    right: 0px;
+  }
+  .slick-prev {
+    right: 40px;
+    left: auto;
+  }
+  .slick-next.slick-disabled, .slick-prev.slick-disabled {
+    opacity: 0;
+  }
+}
+.post-model {
+  img {
+    height: 630px;
+    max-width: 100%;
+    width: auto;
+    @media only screen and (max-width: 991px) {
+      height: 500px;
+    }
+    @media only screen and (max-width: 479px) {
+      height: 350px;
+    }
+  }
+  .slick-arrow {
+    color: #fff;
+    top: 50%;
+    z-index: 1;
+  }
+  .slick-slide > div {
+    margin: 0;
+  }
+  .slick-prev {
+    right: auto;
+    left: 0;
+  }
+  .slick-next.slick-disabled, .slick-prev.slick-disabled {
+    opacity: 1;
+  }
+}
+.social-model{
+  text-align: center;
+  margin: 5%;
+  .card-wrap{
+    border-radius: 15px;
+    @media only screen and (max-width: 599px) {
+      overflow: scroll;
+      max-height: 600px;
+    }
+    @media only screen and (max-width: 375px) {
+      overflow: scroll;
+      max-height: 500px;
+    }
+    .card-bottom{
+      .post {
+        width: 14%;
+        @media only screen and (max-width: 768px) {
+          width: 25%;
+        }
+        @media only screen and (max-width: 599px) {
+          width: 33%;
+        }
+      }
+    }
+  }
+  img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  .s-icon{
+    font-size: 4rem;
+    vertical-align: middle;
+    @media only screen and (max-width: 1024px) {
+      font-size: 2rem;
+    }
+  }
+  .s-title{
+    font-size: 40px;
+    vertical-align: middle;
+    color: #656565;
+    @media only screen and (max-width: 1024px) {
+      font-size: 20px;
+    }
+  }
+  .grid-img{
+    margin: 0;
+    width: auto;
+    .post-img {
+      padding: 20px 20px 10px;
+      @media only screen and (max-width: 991px) {
+        padding: 10px;
+      }
+    }
+  }
+  .card-top {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #d3d3d3;
+    margin-bottom: 30px;
+  }
+  .title{
+    float: none;
+    .c-title{
+      font-size: 30px;
+      margin-bottom: 30px;
+      color: #656565;
+      @media only screen and (max-width: 1024px) {
+        font-size: 20px;
+      }
+    }
+  }
+  .primary-btn{
+    font-size: 20px;
+    padding: .3rem 5rem;
+    margin-top: 15px;
+    text-transform: capitalize;
+  }
+}
+
+.category-slider {
+  text-align: center;
+  width: 100%;
+  overflow: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  .category {
+    display: inline-block;
+    margin: 10px 8px 15px;
+    .cat-img {
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 50%;
+      height: 80px;
+      width: 80px;
+      &.red {
+        border-color: $color_red;
+      }
+      &.green {
+        border-color: $color_green;
+      }
+      &.yellow {
+        border-color: $color_yellow;
+      }
+      &.blue {
+        border-color: $color_blue;
+      }
+      img {
+        padding: 17px 0;
+      }
+    }
+  }
+}
+/* width */
+.category-slider::-webkit-scrollbar {
+  width: 4px;
+  height: 5px;
+}
+/* Track */
+.category-slider::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+.category-slider::-webkit-scrollbar-thumb {
+  background: #888;
+}
+/* Handle on hover */
+.category-slider::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.main-content {
+  margin: 0 15px 50px;
+  text-align: center;
+  .suggest-plan {
+    padding: 0;
+    margin: 0 auto;
+
+    .subtitle1 {
+      font-size: 18px;
+      color: #808080;
+      font-weight: 400;
+      margin: 7px 0 10px;
+    }
+
+    .heading-title {
+      color: white;
+      text-transform: capitalize;
+      font-size: 20px;
+      padding: 5px 0;
+    }
+
+    .custom-plan {
+      max-width: 700px;
+      margin: 0 auto;
+      .custom-wrap{
+        border: 1px solid $color_blue;
+        border-radius: 10px;
+      }
+      .custom-wrap2{
+        border: 1px solid $color_green;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+      .payment-btn{
+        font-size:18px;
+        padding:.1rem 6rem;
+        margin: 10px 0;
+        border-radius: 10px;
+        color: #fff;
+        text-transform: capitalize;
+      }
+    }
+
+    .check-circle {
+      min-width: 38px;
+    }
+
+    .MuiListItemText-primary {
+      font-size: 13px;
+      @media only screen and (max-width: 375px) {
+        font-size: 11px;
+      }
+    }
+    li .MuiListItemIcon-root {
+      min-width: 26px;
+    }
+
+    .list-item {
+      padding: 0 10px;
+      @media only screen and (max-width: 375px) {
+        padding: 0 1px;
+      }
+
+      .item-text {
+        color: grey;
+        font-size: 10px;
+      }
+    }
+
+    .MuiTab-root {
+      width: 23%;
+      border: 1px solid $color_green;
+      margin: 10px 5px;
+      border-radius: 10px;
+      min-width: auto;
+      @media only screen and (max-width: 375px) {
+        width: 20%;
+      }
+      &.Mui-selected{
+        border: 2px solid $color_green;
+      }
+    }
+
+    .MuiTabs-indicator {
+      background: none;
+    }
+
+    .card-content > .MuiBox-root {
+      width: auto;
+    }
+
+    .tab-panel .MuiBox-root {
+      padding: 0;
+    }
+    .tab-panel {
+      padding: 0 15px;
+    }
+    @media only screen and (max-width: 575px) {
+      .MuiCardActions-root {
+        padding: 10px 0;
+      }
+    }
+  }
+  .custom-btn{
+    font-size:18px;
+    padding:.6rem 6rem;
+    margin-top:15px;
+    border-radius: 10px;
+    text-transform: capitalize;
+  }
+
+  .card-content {
+    padding: 0;
+  }
+  .tab-panel {
+    .MuiInput-underline:before {
+      content: none;
+    }
+    .MuiInput-underline:after {
+      content: none;
+    }
+  }
+}
+
+
+/////-------------------customer payment---------------------//////
+
+
+.suggest-plan{
+  padding: 0;
+  margin: 0 auto;
+  .subtitle1 {
+    font-size: 18px;
+    color: #808080;
+    font-weight: 400;
+    margin: 7px 0 10px;
+  }
+  .heading-title{
+    color: white;
+    text-transform: capitalize;
+    font-size: 20px;
+    padding: 5px 0;
+  }
+  .custom-plan {
+    margin: 0 auto;
+  }
+  .check-circle {
+    min-width: 38px;
+    @media only screen and (max-width: 1024px)  {
+      min-width: 0;
+    }
+  }
+
+  .list-item {
+    padding: 15px 10px;
+    .item-text {
+      color: grey;
+      font-size: 10px;
+    }
+    @media only screen and (max-width: 1024px)  {
+      padding: 5px 10px;
+    }
+  }
+  @media only screen and (max-width: 1024px)  {
+    .bottom-list{
+      padding: 0;
+    }
+    .bottom-list .list-item {
+      padding: 0 10px 10px;
+    }
+    .list-item span{
+      font-size: 0.9rem;
+    }
+  }
+}
+
+/////-------------------customer plan---------------------//////
+
+.Customer-plans {
+  text-align: center;
+
+  #demo-simple-select {
+    padding: 11px;
+  }
+  .subtitle {
+    color: gray;
+    margin-bottom: 15px;
+    @media only screen and (max-width: 991px) {
+      font-size: 14px;
+    }
+  }
+  .container{
+    width: 70%;
+    margin: 0 auto;
+    @media only screen and (max-width: 1250px)  {
+      width: 80%;
+    }
+    @media only screen and (max-width: 1199px)  {
+      width: 90%;
+    }
+  .C-plans-form {
+    overflow: hidden;
+    .customer-box {
+      border-width: 1px;
+      border-radius: 10px;
+      border-style: solid;
+      .heading-title {
+        color: white;
+        text-transform: capitalize;
+        font-size: 20px;
+        padding: 5px 0;
+        border-radius: 10px 10px 0 0;
+      }
+      .customer-form {
+        padding: 15px 20px 20px;
+        text-transform: capitalize;
+
+        .lable-form {
+          font-size: 0.8rem;
+          line-height: 1.7rem;
+          text-align: left;
+        }
+      }
+    }
+  }
+  }
+  @media only screen and (max-width: 1024px)  {
+    .container{
+      width: auto;
+      padding: 0 15px;
+    }
+  }
+}

@@ -33,7 +33,6 @@ const customStyles = {
         ...provider,
         width: '100%',
         // marginLeft: '10%',
-        marginTop: '10px',
         textAlign:'left',
 
 
@@ -67,8 +66,12 @@ const DropdownIndicator = props => {
 const MultipleSelect = () => {
     return(
         <div>
-            <Select isMulti styles={customStyles} placeholder={<div>Select category</div>}
-                    components={{DropdownIndicator}} options={options}/>
+            <Select
+              isMulti
+              styles={customStyles}
+              placeholder={<div>Select category</div>}
+              components={{DropdownIndicator}}
+              options={options}/>
         </div>
     )
 };

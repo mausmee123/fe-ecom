@@ -8,12 +8,13 @@ import {
     ThemeProvider,
     Typography
 } from '@material-ui/core';
-import Select, { components } from 'react-select';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { useForm } from "react-hook-form";
+import { useForm , Controller} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Radio from "@material-ui/core/Radio/Radio";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import styled from "styled-components";
 
 
 //custom theme for color
@@ -153,7 +154,7 @@ const useStyle = makeStyles((them) => ({
     },
     urlTextfield: {
         width: '100%',
-        marginBottom: '20px',
+        marginBottom: '10px',
         [theme.breakpoints.down('xs')]: {
             width: '100%',
             marginBottom: '0'
@@ -343,6 +344,27 @@ const useStyle = makeStyles((them) => ({
 
 }));
 
+
+const AutocompleteStyle = styled(Autocomplete)({
+    "& .MuiChip-root": {
+        color: '#fff',
+        fontSize: "15px",
+        backgroundColor: '#007FFF',
+        borderRadius:'5px',
+        alignItems: "flex-start",
+        padding:"5px 0"
+    },
+    "& .MuiChip-deleteIcon":{
+        height:'15px',
+        width:'15px',
+        color: "rgba(255, 255,255, 0.4)",
+        margin:"-3px 4px 0 -8px"
+    },
+    "& .MuiChip-deleteIcon:hover":{
+        color: "rgba(255, 255,255, 0.26)",
+    }
+});
+
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
@@ -350,72 +372,9 @@ const options = [
 ];
 
 
-// customStyle for select input field
-
-const customStyles = {
-    multiValue: (provided, state) => ({
-        ...provided,
-        backgroundColor: '#007FFF',
-        // padding: '4px',
-        alignItems: 'flex-start'
-    }),
-    multiValueLabel: (provided, state) => ({
-        ...provided,
-        color: '#fff',
-        fontSize: '17px'
-    }),
-    multiValueRemove: (provided, state) => ({
-        ...provided,
-        color: '#fff',
-        '&:hover': {
-            backgroundColor: '#007fff',
-            color: '#fff'
-        }
-    }),
-    container: (provider, state) => ({
-        ...provider,
-        width: '100%',
-        marginBottom: '20px',
-
-        '@media only screen and (max-width: 600px)': {
-            ...provider['@media only screen and (max-width: 600px)'],
-            width: '100%',
-            marginBottom: '0'
-        }
-    }),
-    dropdownIndicator: (provider, state) => ({
-        ...provider,
-        '@media only screen and (max-width: 600px)': {
-            ...provider['@media only screen and (max-width: 600px)'],
-            padding: 0
-        }
-    })
-};
-
-// custom icon for select input field
-
-const CaretDownIcon = () => {
-    return <ArrowDropDownIcon fontSize="large" />;
-};
-const DropdownIndicator = (props) => {
-    return (
-        <components.DropdownIndicator {...props}>
-            <CaretDownIcon />
-        </components.DropdownIndicator>
-    );
-};
-
 
 const schema = yup.object().shape({
     Destination: yup.string().required(),
-    Keywords: yup.array()
-      .min(3, 'Pick at least 3 tags')
-      .of(
-        yup.object().shape({
-            label: yup.string().required(),
-            value: yup.string().required(),
-        })
-      ),
     Categories: yup.string().required(),
     Company: yup.string().required(),
     color: yup.string().required(),
@@ -439,16 +398,22 @@ const schema = yup.object().shape({
       .test("type", "We only support jpeg", function (value) {
           return value && value[0] && value[0].type === "image/jpeg";
       }),
-    // option: yup.array()
-    //   .min(3, 'Pick at least 3 tags')
-    //   .of(
-    //     yup.object().shape({
-    //         label: yup.string().required(),
-    //         value: yup.string().required(),
-    //     })
-    //   ),
-    selAutoV: yup.array().required("Multi Select Validation Field required"),
-    multipleSelect: yup.array().min(1),
+    keywords: yup.array()
+      .of(
+        yup.object().shape({
+            value: yup.string(),
+            label: yup.string()
+        })
+      )
+      .min(2, "Options is required"),
+    multi_email: yup.array()
+      .of(
+        yup.object().shape({
+            value: yup.string(),
+            label: yup.string()
+        })
+      )
+      .min(2, "Options is required")
 
 });
 
@@ -464,8 +429,21 @@ export default function ImageUpload() {
         console.log('image', image);
     };
 
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption, setSelectedOption] = useState([]);
     console.log(selectedOption);
+
+    // const qwe = (e) => {
+    //
+    //
+    //     const selectedOption=(e.target.value);
+    //
+    //     for (let i = 0; i < selectedOption.length; i++){
+    //         selectedOption.push(selectedOption.item(i).value)
+    //     }
+    //
+    //     console.log(selectedOption);
+    //     setSelectedOption([...selectedOption]);
+    // }
 
     const [logoImage, setLogoImage] = useState('');
 
@@ -473,7 +451,6 @@ export default function ImageUpload() {
 
     const handleChange = (e) => {
         setSelectedValue(e.target.value);
-        setSelectedOption([...selectedOption]);
     };
 
     const logoUpload = (e) => {
@@ -491,7 +468,7 @@ export default function ImageUpload() {
     };
 
 
-    const { register, handleSubmit, formState: { errors } , reset} = useForm({
+    const { register, handleSubmit, formState: { errors } , reset, control} = useForm({
         resolver: yupResolver(schema),
     });
 
@@ -593,30 +570,71 @@ export default function ImageUpload() {
                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
                         Choose one or more keywords for your picture
                     </Typography>
-                    <Select
-                        isMulti
-                        styles={customStyles}
-                        placeholder={<div className={classes.placeholder}>Select category</div>}
-                        components={{ DropdownIndicator }}
-                        options={options}
-                        {...register('Keywords', {onChange: (e) => handleChange(e)})}
-                    />
-                    <div className={classes.invalidFeedback}>{errors.Keywords?.message}</div>
+                    <Grid item xs={12}>
+                        <Controller
+                          name="keywords"
+                          control={control}
+                          defaultValue={[]}
+                          render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                            <AutocompleteStyle
+                              {...field}
+                              disableClearable
+                              disablePortal
+                              filterSelectedOptions
+                              multiple
+                              getOptionDisabled={(option) => option.disabled}
+                              getOptionLabel={(option) => option.label}
+                              onChange={(event, value) => field.onChange(value)}
+                              options={options}
+                              renderInput={(params) => (
+                                <TextField
+                                  error={!!error}
+                                  helperText={error?.message}
+                                  variant="outlined"
+                                  type="search"
+                                  inputRef={ref}
+                                  {...params}
+                                />
+                              )}
+                            />
+                          )}
+                        />
+                    </Grid>
                     <br/><br/>
 
                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
                         Choose 1-5 business categories for your picture
                     </Typography>
-                    <Select
-                      isMulti
-                      defaultValue={selectedOption}
-                      onChange={setSelectedOption}
-                      options={options}
-                      styles={customStyles}
-                      placeholder={<div className={classes.placeholder}>Select category</div>}
-                      components={{ DropdownIndicator }}
+                    <Grid item xs={12}>
+                    <Controller
+                      name="multi_email"
+                      control={control}
+                      defaultValue={[]}
+                      render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                        <AutocompleteStyle
+                          {...field}
+                          disableClearable
+                          disablePortal
+                          filterSelectedOptions
+                          multiple
+                          getOptionDisabled={(option) => option.disabled}
+                          getOptionLabel={(option) => option.label}
+                          onChange={(event, value) => field.onChange(value)}
+                          options={options}
+                          renderInput={(params) => (
+                            <TextField
+                              error={!!error}
+                              helperText={error?.message}
+                              variant="outlined"
+                              type="search"
+                              inputRef={ref}
+                              {...params}
+                            />
+                          )}
+                        />
+                      )}
                     />
-                    <div className={classes.invalidFeedback}>{errors.Keywords?.message}</div>
+                    </Grid>
                     <br/><br/>
 
                 </Grid>

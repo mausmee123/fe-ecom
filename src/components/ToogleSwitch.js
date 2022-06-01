@@ -9,6 +9,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
     height: 26,
     padding: 0,
     display: 'flex',
+    overflow: 'visible',
     '&:active': {
         '& .MuiSwitch-thumb': {
             width: 25,

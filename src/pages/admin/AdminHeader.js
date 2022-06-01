@@ -56,7 +56,7 @@ const AdminHeader = () => {
     return (
         <>
             <Container maxWidth="xl" className={classes.margin}>
-                <Box sx={{height: '100vh', flexGrow: 1}}>
+                <Box style={{height: '100vh', flexGrow: 1}}>
                     {/*<Grid container spacing={{xs: 2, md: 3}} columns={{xs: 12, sm: 8, md: 12}}>*/}
                     {/*    <Grid item xs={12} sm={12} md={3}>*/}
                     {/*        <img src={logo}/>*/}

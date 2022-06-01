@@ -35,6 +35,9 @@ const useStyle = makeStyles((theme) => ({
         height: '100%',
         marginTop: '5px',
         overflowY: 'auto',
+        [theme.breakpoints.down('xs')]: {
+            height: '300px',
+        },
     },
     images: {
         height: '400px'

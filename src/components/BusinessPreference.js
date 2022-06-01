@@ -14,10 +14,11 @@ import FilterByCompany from "./FilterByCompany";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Radio from "@material-ui/core/Radio/Radio";
 import BusinessPictures from "./BusinessPictures";
-import Select, { components } from 'react-select';
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import styled from "styled-components";
+import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 
 const theme = createTheme({
     palette: {
@@ -28,6 +29,26 @@ const theme = createTheme({
             main: "#00D037",
         },
     },
+});
+
+const AutocompleteStyle = styled(Autocomplete)({
+    "& .MuiChip-root": {
+        color: '#fff',
+        fontSize: "15px",
+        backgroundColor: '#007FFF',
+        borderRadius:'5px',
+        alignItems: "flex-start",
+        padding:"5px 0"
+    },
+    "& .MuiChip-deleteIcon":{
+        height:'15px',
+        width:'15px',
+        color: "rgba(255, 255,255, 0.4)",
+        margin:"-3px 4px 0 -8px"
+    },
+    "& .MuiChip-deleteIcon:hover":{
+        color: "rgba(255, 255,255, 0.26)",
+    }
 });
 
 const schema = yup.object().shape({
@@ -57,12 +78,29 @@ const schema = yup.object().shape({
         .test("type", "We only support jpeg", function (value) {
             return value && value[0] && value[0].type === "image/jpeg";
         }),
+    keywords:  yup.array()
+          .of(
+            yup.object().shape({
+                value: yup.string(),
+                label: yup.string()
+            })
+          )
+          .min(2, "Options is required"),
+    multi_email: yup.array()
+      .of(
+        yup.object().shape({
+            value: yup.string(),
+            label: yup.string()
+        })
+      )
+      .min(2, "Options is required")
 });
 
 const useStyle = makeStyles((theme) => ({
     productCategories: {
         border: '1px solid rgba(0, 0, 0, 0.12)',
         borderRadius: '15px',
+        overFlow: 'hidden'
     },
     productCategoriesTitle: {
         backgroundColor: '#007FFF',
@@ -79,7 +117,10 @@ const useStyle = makeStyles((theme) => ({
         color: '#fff',
         [theme.breakpoints.down('md')]: {
             fontSize: '16px'
-        }
+        },
+        [theme.breakpoints.down('md')]: {
+        fontSize: '12px'
+        },
     },
     inputFieldWrapper: {
         padding: '0 8px'
@@ -109,6 +150,8 @@ const useStyle = makeStyles((theme) => ({
     },
     main: {
         paddingLeft: '10px',
+        margin: '0',
+        width: '100%',
         [theme.breakpoints.down('xs')]: {
             paddingLeft: '0',
         },
@@ -202,9 +245,11 @@ const useStyle = makeStyles((theme) => ({
 
     label: {
         width: '540px',
-        fontSize: '16px',
+        fontSize: '14px',
         color: '#656565',
         fontStyle: 'normal',
+        lineHeight: '2rem',
+        marginTop: '10px',
         [theme.breakpoints.down('lg')]: {
             marginTop: '10px',
         },
@@ -475,15 +520,8 @@ const DropdownIndicator = (props) => {
 
 const BusinessPreference = () => {
     const classes = useStyle();
-    const [image, setImage] = useState();
-    const [logoImage, setLogoImage] = useState('');
     const [selectedValue, setSelectedValue] = useState('a');
 
-    const handleFileChange = (e) => {
-        const [file] = e.target.files;
-        setImage([...image, { img: URL.createObjectURL(file) }]);
-        console.log('image', image);
-    };
 
     const onSubmitHandler = (data) => {
         console.log({ data });
@@ -494,23 +532,15 @@ const BusinessPreference = () => {
         setSelectedValue(event.target.value);
     };
 
-    const logoUpload = (e) => {
-        console.log('logoImage1', logoImage);
-        const [img] = e.target.files;
-        const image1 = URL.createObjectURL(img);
-        console.log('image1', image1);
-        setLogoImage(URL.createObjectURL(img));
-    };
 
-    const { register, setValue, handleSubmit, formState: { errors } , reset} = useForm({
+    const { register, handleSubmit, formState: { errors } , reset, control} = useForm({
         resolver: yupResolver(schema),
     });
 
     return(
         <>
             <ThemeProvider theme={theme}>
-
-            <Grid container style={{ width: '100%' }} className="BusinessPreference">
+            <Grid style={{ width: '100%' }} className="BusinessPreference">
                 <form onSubmit={handleSubmit(e => onSubmitHandler(e))}>
                 <Grid container className={classes.productCategories} item xs={12} spacing={1}>
                     <Grid className={classes.productCategoriesTitle} item xs={12}>
@@ -639,7 +669,7 @@ const BusinessPreference = () => {
                                         </Typography>
                                     </Grid>
                                     <Grid item className={classes.logoPlaceHolder}>
-                                        <img className={classes.logoImage} src={logoImage} name="logo" />
+                                        <img className={classes.logoImage} name="logo" />
                                         <svg
                                             className={classes.personIcon}
                                             viewBox="0 0 55 50"
@@ -685,22 +715,69 @@ const BusinessPreference = () => {
                                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
                                         Choose one or more keywords for your picture
                                     </Typography>
-                                    <Select
-                                        isMulti
-                                        styles={customStyles}
-                                        placeholder={<div className={classes.placeholder}>Select category</div>}
-                                        components={{ DropdownIndicator }}
-                                        options={options}
-                                    />
+                                    <Grid item xs={12}>
+                                        <Controller
+                                          name="keywords"
+                                          control={control}
+                                          defaultValue={[]}
+                                          render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                                            <AutocompleteStyle
+                                              {...field}
+                                              disableClearable
+                                              disablePortal
+                                              filterSelectedOptions
+                                              multiple
+                                              getOptionDisabled={(option) => option.disabled}
+                                              getOptionLabel={(option) => option.label}
+                                              onChange={(event, value) => field.onChange(value)}
+                                              options={options}
+                                              renderInput={(params) => (
+                                                <TextField
+                                                  error={!!error}
+                                                  helperText={error?.message}
+                                                  variant="outlined"
+                                                  type="search"
+                                                  inputRef={ref}
+                                                  {...params}
+                                                />
+                                              )}
+                                            />
+                                          )}
+                                        />
+                                    </Grid>
                                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
                                         Choose 1-5 business categories for your picture
                                     </Typography>
-                                    <Select
-                                        isMulti
-                                        styles={customStyles}
-                                        components={{ DropdownIndicator }}
-                                        options={options}
-                                    />
+                                    <Grid item xs={12}>
+                                        <Controller
+                                          name="multi_email"
+                                          control={control}
+                                          defaultValue={[]}
+                                          render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                                            <AutocompleteStyle
+                                              {...field}
+                                              disableClearable
+                                              disablePortal
+                                              filterSelectedOptions
+                                              multiple
+                                              getOptionDisabled={(option) => option.disabled}
+                                              getOptionLabel={(option) => option.label}
+                                              onChange={(event, value) => field.onChange(value)}
+                                              options={options}
+                                              renderInput={(params) => (
+                                                <TextField
+                                                  error={!!error}
+                                                  helperText={error?.message}
+                                                  variant="outlined"
+                                                  type="search"
+                                                  inputRef={ref}
+                                                  {...params}
+                                                />
+                                              )}
+                                            />
+                                          )}
+                                        />
+                                    </Grid>
                                     <Typography className={classes.label} shrink htmlFor="bootstrap-input">
                                         Insert delay time in seconds for picture chnage on card
                                     </Typography>
@@ -776,7 +853,7 @@ const BusinessPreference = () => {
                                                         className={classes.companyName}
                                                         InputProps={{ classes: { input: classes.companyNameLabel } }}
                                                         variant="outlined"
-                                                        {...register('company_name')}
+                                                        {...register('companyName')}
                                                     />
                                                     <div className="invalid-feedback">{errors.companyName?.message}</div>
                                                 </Grid>

@@ -5,6 +5,7 @@ import Box from "@material-ui/core/Box";
 import InputLabel from "@mui/material/InputLabel";
 import Button from "@material-ui/core/Button";
 import "../pages/admin/Publish.scss";
+import "../pages/admin/Account.scss";
 
 
 const FilterByCountry = (props) => {
@@ -19,7 +20,7 @@ const FilterByCountry = (props) => {
                 autoHighlight
                 getOptionLabel={(option) => option.label}
                 renderOption={(props, option) => (
-                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                    <Box component="li" style={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                         <img
                             loading="lazy"
                             width="20"

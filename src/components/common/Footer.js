@@ -13,7 +13,8 @@ const useStyle = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: '24px',
+        height: '40px',
+        textAlign: 'center',
         fontSize: 'small',
         paddingBottom: '3px',
         zIndex: '99'

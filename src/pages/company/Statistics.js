@@ -6,12 +6,12 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import "./Statistics.scss"
+import "./statistics.scss"
 
 const Statistics = () => {
     return (
       <>
-            <Box sx={{flexGrow: 1}}>
+            <Box style={{flexGrow: 1}}>
                 <div className="dashboard">
                     <Grid container spacing={1}>
                         <Grid item xs={12} md={6}>
@@ -29,7 +29,7 @@ const Statistics = () => {
                                 <DashboardPieChart/>
                                 <div className="pie-button">
                                     <Button className="pie-btn" variant="contained" color="secondary" type="submit">sign up</Button>
-                                    <Button className="pie-btn" variant="contained" color="primary" type="submit" sx={{margin: "0 15px"}}>
+                                    <Button className="pie-btn" variant="contained" color="primary" type="submit" style={{margin: "0 15px"}}>
                                         Statistics
                                     </Button>
                                     <Button className="pie-btn" variant="contained" color="primary" type="submit">
