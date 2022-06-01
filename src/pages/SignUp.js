@@ -18,6 +18,10 @@ import { ThemeProvider } from '@material-ui/styles';
 import Header from '../components/common/Header';
 import Dividers from '../components/common/Divider';
 import InputLabel from '@material-ui/core/InputLabel';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const theme = createTheme({
     palette: {
@@ -69,9 +73,8 @@ const useStyle = makeStyles((theme) => ({
         paddingTop: '13px',
         width: '400px',
         [theme.breakpoints.down('xs')]: {
-            width: '75%',
+            width: '100%',
             paddingTop: '6px',
-            margin: '0px 12.5% 10px 12.5%',
             height: '38px'
         }
     },
@@ -80,12 +83,11 @@ const useStyle = makeStyles((theme) => ({
         height: '60px',
         width: '400px',
         boxSizing: 'borderBox',
-        marginBottom: '20px',
+        marginBottom: '5px',
+        marginTop:'20px',
         [theme.breakpoints.down('xs')]: {
-            width: '75%',
+            width: '100%',
             height: '50px',
-            marginLeft: '12.5%',
-            marginRight: '12.5%'
         }
     },
     checkboxField: {
@@ -104,13 +106,14 @@ const useStyle = makeStyles((theme) => ({
     },
     termCondition: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        margin: '15px 0',
     },
 
     checkBox: {
         padding: '0px',
         [theme.breakpoints.down('xs')]: {
-            marginLeft: '12.5%'
+            margin: '0'
         }
     },
     labelText: {
@@ -120,18 +123,16 @@ const useStyle = makeStyles((theme) => ({
         fontSize: '14px',
         width: '373px',
         [theme.breakpoints.down('xs')]: {
-            width: '65%',
+            width: '100%',
             fontSize: '12px',
-            margin: '0px 0px 0px 4%'
         }
     },
     links: {
         marginLeft: '43px',
         width: '350px',
         [theme.breakpoints.down('xs')]: {
-            width: '74%',
+            width: '100%',
             fontSize: 11,
-            margin: '0px 0px 0px 26%'
         }
     },
     saveButton: {
@@ -143,10 +144,9 @@ const useStyle = makeStyles((theme) => ({
         fontWeight: '400',
         backgroundColor: '#007FFF',
         [theme.breakpoints.down('xs')]: {
-            width: '50%',
-            margin: '0px 25%',
-            marginBottom: '20px',
-            fontSize: '14px'
+            width: '100%',
+            fontSize: '14px',
+            marginBottom: '30px',
         }
     },
     textFieldStyleBlue: {
@@ -177,6 +177,11 @@ const useStyle = makeStyles((theme) => ({
             // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
             borderColor: theme.palette.primary.main
         }
+    },
+
+    invalidFeedback:{
+        color:'#C32525',
+        textAlign:'left'
     }
 }));
 
@@ -199,6 +204,22 @@ const currencies = [
     }
 ];
 
+
+const schema = yup.object().shape({
+    Name: yup.string().required(),
+    Url: yup.string().url().required(),
+    Employee: yup.string().email().required(),
+    Email: yup.string().email().required(),
+    // Age: yup.string().required(),
+    age: yup.string().required(),
+    password: yup.string()
+      .required('Password is required')
+      .min(8, 'Password length should be at least 8 characters'),
+    confirm_password: yup.string()
+      .required('Confirm Password is required')
+      .oneOf([yup.ref('password')], 'Passwords must and should match'),
+});
+
 export default function SignUp() {
     const classes = useStyle();
     const [data, setData] = useState({});
@@ -209,12 +230,22 @@ export default function SignUp() {
         setData({ ...data, [e.target.name]: e.target.value });
     };
 
+    const onSubmitHandler = (data) => {
+        console.log({ data });
+        reset();
+    };
+
+    const { register, setValue, handleSubmit, formState: { errors } , reset} = useForm({
+        resolver: yupResolver(schema),
+    });
+
     return (
         <ThemeProvider theme={theme}>
             <Container className={classes.wrapper}>
                 <Header />
                 <Dividers />
 
+                <form onSubmit={handleSubmit(e => onSubmitHandler(e))}>
                 <Grid className={classes.form}>
                     <Typography className={classes.formTitle} variant="subtitle1">
                         New Account Business Details
@@ -230,8 +261,9 @@ export default function SignUp() {
                         label="Legal Name of Business"
                         variant="filled"
                         handlechange={(e) => handleChange(e)}
-                        required={true}
+                        validation={register("Name")}
                     />
+                    <div className={classes.invalidFeedback}>{errors.Name?.message}</div>
                     {/*</div>*/}
                     {/*<div className={classes.inputFilledBorder}>*/}
                     <CustomTextField
@@ -244,8 +276,9 @@ export default function SignUp() {
                         label="Insert webshop URI or homepage address"
                         variant="filled"
                         handlechange={(e) => handleChange(e)}
-                        required
+                        validation={register("Url")}
                     />
+                    <div className={classes.invalidFeedback}>{errors.Url?.message}</div>
                     {/*</div>*/}
                     {/*<div className={classes.inputFilledBorder}>*/}
                     <CustomTextField
@@ -258,8 +291,9 @@ export default function SignUp() {
                         label="Number of employees in your company"
                         variant="filled"
                         handlechange={(e) => handleChange(e)}
-                        required
+                        validation={register("Employee")}
                     />
+                    <div className={classes.invalidFeedback}>{errors.Employee?.message}</div>
                     {/*</div>*/}
                     {/*<div className={classes.inputFilledBorder}>*/}
                     <CustomTextField
@@ -272,8 +306,9 @@ export default function SignUp() {
                         label="Account Email"
                         variant="filled"
                         handlechange={(e) => handleChange(e)}
-                        required
+                        validation={register("Email")}
                     />
+                    <div className={classes.invalidFeedback}>{errors.Email?.message}</div>
                     {/*</div>*/}
                     {/*<div className={classes.inputFilledBorder}>*/}
                     {/*  <TextField*/}
@@ -298,31 +333,34 @@ export default function SignUp() {
                     {/*      </MenuItem>*/}
                     {/*    ))}*/}
                     {/*  </TextField>*/}
+
+
+
                     <FormControl variant="filled" className={classes.inputFilled}>
                         <InputLabel
-                            htmlFor="filled-age-native-simple"
-                            classes={{ root: classes.textFieldStyleBlue }}
+                          htmlFor="filled-age-native-simple"
+                          classes={{ root: classes.textFieldStyleBlue }}
                         >
                             Age
                         </InputLabel>
                         <Select
-                            native
-                            // value={state.age}
-                            // onChange={handleChange}
-                            color="primary"
-                            inputProps={{
-                                name: 'age',
-                                id: 'filled-age-native-simple',
-                                disableUnderline: true
-                            }}
-                            classes={{ root: classes.root1 }}
+                          color="primary"
+                          inputProps={{
+                              name: 'age',
+                              id: 'filled-age-native-simple',
+                              disableUnderline: true
+                          }}
+                          classes={{ root: classes.root1 }}
+
+                          {...register('age')}
                         >
-                            <option aria-label="None" value="" />
-                            <option value={10}>Ten</option>
-                            <option value={20}>Twenty</option>
-                            <option value={30}>Thirty</option>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
                         </Select>
                     </FormControl>
+                    <div className={classes.invalidFeedback}>{errors.age?.message}</div>
+
                     {/*</div>*/}
                     {/*<div className={classes.inputFilledBorder}>*/}
                     <CustomTextField
@@ -335,8 +373,9 @@ export default function SignUp() {
                         label="Paasword"
                         variant="filled"
                         handlechange={(e) => handleChange(e)}
-                        required
+                        validation={register("password")}
                     />
+                    <div className={classes.invalidFeedback}>{errors.password?.message}</div>
                     {/*</div>*/}
                     {/*<div className={classes.inputFilledBorder}>*/}
                     <CustomTextField
@@ -349,8 +388,9 @@ export default function SignUp() {
                         label="Repeat Password"
                         variant="filled"
                         handlechange={(e) => handleChange(e)}
-                        required
+                        validation={register("confirm_password")}
                     />
+                    <div className={classes.invalidFeedback}>{errors.confirm_password?.message}</div>
                     {/*</div>*/}
                     <div className={classes.termCondition}>
                         <Checkbox
@@ -381,10 +421,11 @@ export default function SignUp() {
                         />
                         <div className={classes.labelText}>Remember Me</div>
                     </div>
-                    <Button variant="contained" className={classes.saveButton}>
+                    <Button variant="contained" color="primary" type="submit" className={classes.saveButton}>
                         Save & Next
                     </Button>
                 </Grid>
+                </form>
             </Container>
         </ThemeProvider>
     );

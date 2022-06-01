@@ -7,6 +7,10 @@ import Header from '../components/common/Header';
 import Dividers from '../components/common/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import CustomTextField from '../components/common/InputField';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+
 
 const theme = createTheme({
     palette: {
@@ -48,12 +52,7 @@ const useStyle = makeStyles((theme) => ({
         width: '400px',
         marginTop: '20px',
         [theme.breakpoints.down('xs')]: {
-            width: '75%',
-            height: '50px',
-            marginTop: '15px',
-            marginBottom: '25px',
-            marginLeft: '12.5%',
-            marginRight: '12.5%',
+            width: '100%',
             fontSize: '13px'
         }
     },
@@ -80,10 +79,7 @@ const useStyle = makeStyles((theme) => ({
         paddingTop: '13px',
         width: '400px',
         [theme.breakpoints.down('sm')]: {
-            width: '75%',
-            paddingTop: '8px',
-            margin: '0px 12.5% 40px 12.5%',
-            height: '38px'
+            width: '100%',
         }
     },
     passwordInputFilledBorder: {
@@ -94,10 +90,7 @@ const useStyle = makeStyles((theme) => ({
         paddingTop: '13px',
         width: '400px',
         [theme.breakpoints.down('sm')]: {
-            width: '75%',
-            paddingTop: '8px',
-            margin: '0px 12.5% 10px 12.5%',
-            height: '38px'
+            width: '100%',
         }
     },
     inputFilled: {
@@ -106,11 +99,9 @@ const useStyle = makeStyles((theme) => ({
         width: '400px',
         boxSizing: 'borderBox',
         marginTop: '20px',
-        marginBottom: '25px',
+        marginBottom: '5px',
         [theme.breakpoints.down('xs')]: {
-            width: '75%',
-            height: '50px',
-            margin: '10px 12.5% 10px 12.5%'
+            width: '100%',
         }
     },
     textFieldStyleGreen: {
@@ -126,9 +117,7 @@ const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         [theme.breakpoints.down('xs')]: {
-            width: '75%',
-            paddingTop: '6px',
-            margin: '0px 12.5% 10px 12.5%'
+            width: '100%',
         }
     },
     label: {
@@ -144,18 +133,37 @@ const useStyle = makeStyles((theme) => ({
         marginTop: '10px',
         width: '400px',
         [theme.breakpoints.down('xs')]: {
-            width: '75%',
-            height: '50px',
-            marginTop: '20px',
-            marginLeft: '12.5%',
-            marginRight: '12.5%',
-            fontSize: '13px'
+            width: '100%',
         }
+    },
+
+    invalidFeedback:{
+        color:'#C32525',
+        textAlign:'left'
     }
 }));
 
+
+const schema = yup.object().shape({
+    Email: yup.string().email().required(),
+    password: yup.string()
+      .required('Password is required')
+      .min(8, 'Password length should be at least 8 characters'),
+});
+
+
 export default function LogIn() {
     const classes = useStyle();
+
+    const onSubmitHandler = (data) => {
+        console.log({ data });
+        reset();
+    };
+
+    const { register, setValue, handleSubmit, formState: { errors } , reset} = useForm({
+        resolver: yupResolver(schema),
+    });
+
     return (
         <ThemeProvider theme={theme}>
             <Container className={classes.wrapper}>
@@ -175,6 +183,8 @@ export default function LogIn() {
                 </Button>
 
                 <Dividers />
+
+                <form onSubmit={handleSubmit(e => onSubmitHandler(e))}>
                 <div className={classes.userLogIn}>User Log in </div>
                 <div className={classes.form}>
                     {/*<div className={classes.emailInputFilledBorder}>*/}
@@ -187,8 +197,9 @@ export default function LogIn() {
                         id="outlined-basic"
                         label="Email or Aggrement Number"
                         variant="filled"
-                        required={true}
+                        validation={register('Email')}
                     />
+                    <div className={classes.invalidFeedback}>{errors.Email?.message}</div>
                     {/*</div>*/}
                     {/*<div className={classes.passwordInputFilledBorder}>*/}
                     <CustomTextField
@@ -200,8 +211,10 @@ export default function LogIn() {
                         id="outlined-basic"
                         label="Password"
                         variant="filled"
-                        required={true}
+                        type="password"
+                        validation={register("password")}
                     />
+                    <div className={classes.invalidFeedback}>{errors.password?.message}</div>
                     {/*</div>*/}
                     <div className={classes.checkbox}>
                         <FormControlLabel
@@ -227,15 +240,17 @@ export default function LogIn() {
                 <Button
                     className={classes.logIn}
                     variant="outlined"
-                    color="primary"
+                    color="secondary"
+                    type="submit"
                     startIcon={
-                        <IconButton color="primary" aria-label="add to shopping cart">
+                        <IconButton color="secondary" aria-label="add to shopping cart">
                             <ExitToAppIcon />
                         </IconButton>
                     }
                 >
                     Sign Up here!
                 </Button>
+                </form>
             </Container>
         </ThemeProvider>
     );

@@ -37,7 +37,8 @@ export default function InputField(props) {
         required,
         handlechange,
         name,
-        autofocus
+        autofocus,
+        validation={}
     } = props;
     const classes = useStyle();
     return (
@@ -74,6 +75,8 @@ export default function InputField(props) {
                 color={color}
                 autoFocus={autofocus}
                 InputLabelProps={InputLabelProps}
+                {...validation}
+                style={{ display: "grid" , marginTop:"10px"}}
             />
         </>
     );
