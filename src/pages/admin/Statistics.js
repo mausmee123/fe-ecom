@@ -6,6 +6,8 @@ import VisitorsChart from "../../components/VisitorsChart";
 import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Switch from "@material-ui/core/Switch";
+import SiteVisitors from "../../components/SiteVisitors";
+import Button from "@material-ui/core/Button";
 
 const AntSwitch = withStyles((theme) => ({
   root: {
@@ -65,7 +67,14 @@ const Statistics = () => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <FilterType/>
+
+          <div className="btn-group">
+            <Button variant="contained" color="primary" className="btn">Export-exel</Button>
+          </div> <FilterType/>
+          <div className="btn-group">
+            <Button variant="contained" color="primary" className="btn"> Refresh</Button>
+          </div>
+
           <VisitorsChart/>
           <VisitorsChart/>
           <VisitorsChart/>

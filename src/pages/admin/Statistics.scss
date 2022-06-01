@@ -111,3 +111,114 @@
     padding-right: 10px;
   }
 }
+
+.site-visitors{
+  .chart-title{
+    color: #616161;
+    margin: 15px 0 25px 0;
+    font-weight: 600;
+    font-size: 24px;
+    @media only screen and (max-width: 959px) {
+      text-align: center;
+      padding: 0;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  }
+  .site-chart-desc {
+    border: 1px solid #616161;
+    border-radius: 15px;
+    width: auto;
+    margin: 0;
+    .chart-icon {
+      display: inline-block;
+      vertical-align: top;
+      svg {
+        font-size: 60px;
+        @media only screen and (max-width: 1199px) {
+          font-size: 40px;
+        }
+      }
+    }
+    .icon-desc{
+      display: inline-block;
+    }
+    .recharts-wrapper {
+      border-left: 1px solid #656565;
+      @media only screen and (max-width: 599px) {
+        border-left: 0;
+      }
+    }
+  }
+  .l-chart-desc {
+    margin-bottom: 20px;
+    @media only screen and (max-width: 599px) {
+      text-align: center;
+    }
+  }
+  .site-btn{
+    @media only screen and (max-width: 599px) {
+      text-align: center;
+    }
+    .st-btn{
+      text-transform: capitalize;
+      font-size: 12px;
+      margin: 10px;
+      color: white;
+      @media only screen and (max-width: 1800px) {
+        margin: 2px;
+        padding: 6px 5px;
+      }
+      @media only screen and (max-width: 1400px) {
+        min-width: 58px;
+      }
+      @media only screen and (max-width: 1040px) {
+        min-width: 52px;
+      }
+      @media only screen and (max-width: 959px) {
+        min-width: 60px;
+      }
+      @media only screen and (max-width: 599px) {
+        min-width: 70px;
+      }
+    }
+  }
+  .chart-lh {
+    @media only screen and (max-width: 1800px) {
+      overflow: scroll;
+      width: auto !important;
+    }
+  }
+}
+.toggle-text {
+  margin-top: 15px;
+}
+.switch.toggle-btn {
+  overflow: visible;
+  height: 14px;
+}
+
+.filter-type {
+  width: 70%;
+  @media only screen and (max-width: 1860px) {
+    width: 65%;
+  }
+  @media only screen and (max-width: 1600px) {
+    width: 60%;
+  }
+  @media only screen and (max-width: 1400px) {
+    width: 100%;
+    margin: 5px;
+  }
+}
+.btn-group, .filter-type {
+  display: inline-block;
+  vertical-align: bottom;
+}
+.btn-group{
+  margin: 0 5px;
+  @media only screen and (max-width: 1400px) {
+    width: 100%;
+    text-align: center;
+  }
+}

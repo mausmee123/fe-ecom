@@ -7,6 +7,9 @@ import {Button, makeStyles} from "@material-ui/core";
 import {useNavigate, useLocation, Outlet} from "react-router-dom"
 import Typography from "@material-ui/core/Typography";
 import {adminRoutes, companyRoutes} from "../../Utils/constants";
+import Logo from "../../assets/Logo.svg";
+import MobileLogo from "../../assets/mobile-logo.svg";
+
 
 const useStyle = makeStyles((theme) => ({
     wrapper: {
@@ -29,11 +32,18 @@ const useStyle = makeStyles((theme) => ({
     },
     title: {
         color: '#656565',
-        textAlign: 'center'
+        textAlign: 'center',
+        [theme.breakpoints.down('xs')]: {
+        fontSize: '20px',
+        }
     },
     color: {
-        fontSize: '15px',
+        fontSize: '18px',
         color: '#fff',
+        textTransform:'capitalize',
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '12px',
+        }
     },
     navButtons: {
         display: 'flex',
@@ -46,6 +56,18 @@ const useStyle = makeStyles((theme) => ({
     },
     margin: {
         marginTop: "10px"
+    },
+    MobileLogo: {
+        display: 'none',
+        [theme.breakpoints.down('sm')]: {
+            display: 'block',
+        }
+    },
+    Logo: {
+        display: 'block',
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+        }
     }
 }));
 
@@ -66,7 +88,7 @@ const AdminHeader = () => {
     return (
         <>
             <Container maxWidth="xl" className={classes.margin}>
-                <Box sx={{height: '100vh', flexGrow: 1}}>
+                <Box style={{ flexGrow: 1}}>
                     {/*<Grid container spacing={{xs: 2, md: 3}} columns={{xs: 12, sm: 8, md: 12}}>*/}
                     {/*    <Grid item xs={12} sm={12} md={3}>*/}
                     {/*        <img src={logo}/>*/}
@@ -104,7 +126,8 @@ const AdminHeader = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={6} className={classes.wrapper}>
                             <div>
-                                <img src={logo}/>
+                                <img src={Logo} alt="React Logo" className={classes.Logo}/>
+                                <img src={ MobileLogo} alt="React MobileLogo"  className={classes.MobileLogo} />
                             </div>
                             {welcomeBanner()}
                         </Grid>
