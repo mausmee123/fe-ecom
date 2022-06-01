@@ -34,7 +34,7 @@ const useStyle = makeStyles((theme) => ({
         color: '#656565',
         textAlign: 'center',
         [theme.breakpoints.down('xs')]: {
-        fontSize: '20px',
+        fontSize: '18px',
         }
     },
     color: {
@@ -57,6 +57,7 @@ const useStyle = makeStyles((theme) => ({
     margin: {
         marginTop: "10px"
     },
+
     MobileLogo: {
         display: 'none',
         [theme.breakpoints.down('sm')]: {

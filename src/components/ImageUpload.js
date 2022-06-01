@@ -75,7 +75,7 @@ const useStyle = makeStyles((them) => ({
         width: '210px',
         height: '60px',
         marginTop: '12px',
-        fontSize:'24px',
+        fontSize:'22px',
         fontWeight:'600',
         textTransform:'capitalize',
         [theme.breakpoints.down('sm')]: {
@@ -345,32 +345,13 @@ const useStyle = makeStyles((them) => ({
 }));
 
 
-const AutocompleteStyle = styled(Autocomplete)({
-    "& .MuiChip-root": {
-        color: '#fff',
-        fontSize: "15px",
-        backgroundColor: '#007FFF',
-        borderRadius:'5px',
-        alignItems: "flex-start",
-        padding:"5px 0"
-    },
-    "& .MuiChip-deleteIcon":{
-        height:'15px',
-        width:'15px',
-        color: "rgba(255, 255,255, 0.4)",
-        margin:"-3px 4px 0 -8px"
-    },
-    "& .MuiChip-deleteIcon:hover":{
-        color: "rgba(255, 255,255, 0.26)",
-    }
-});
+
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' }
 ];
-
 
 
 const schema = yup.object().shape({
@@ -413,8 +394,28 @@ const schema = yup.object().shape({
             label: yup.string()
         })
       )
-      .min(2, "Options is required")
+      .min(2, "Options is required"),
 
+});
+
+const AutocompleteStyle = styled(Autocomplete)({
+    "& .MuiChip-root": {
+        color: '#fff',
+        fontSize: "15px",
+        backgroundColor: '#007FFF',
+        borderRadius:'5px',
+        alignItems: "flex-start",
+        padding:"5px 0"
+    },
+    "& .MuiChip-deleteIcon":{
+        height:'15px',
+        width:'15px',
+        color: "rgba(255, 255,255, 0.4)",
+        margin:"-3px 4px 0 -8px"
+    },
+    "& .MuiChip-deleteIcon:hover":{
+        color: "rgba(255, 255,255, 0.26)",
+    },
 });
 
 
@@ -433,7 +434,6 @@ export default function ImageUpload() {
     console.log(selectedOption);
 
     // const qwe = (e) => {
-    //
     //
     //     const selectedOption=(e.target.value);
     //
